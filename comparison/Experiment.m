@@ -36,8 +36,11 @@ for fold = 1:setFold
         option_liblinear = ['-w+1 ', num2str(weight), ' -w-1 1 -c ', num2str(C(idx)), ' -s 1 -q'];
         mdl = train(learn.y, sparse(learn.X), option_liblinear);
         
-        [pred, ~, ~] = predict(val.y, sparse(val.X), mdl);
-        crossValAccuracy(idx, fold) = sum(pred == val.y) / length(val.y);  
+%         [pred, ~, ~] = predict(val.y, sparse(val.X), mdl);
+%         crossValAccuracy(idx, fold) = sum(pred == val.y) / length(val.y);  
+        
+        %%% ----- or specify a 'validation function' in do_binary_predict()
+        [pred, crossValAccuracy(idx,fold), dec] = do_binary_predict(val.y, sparse(val.X), mdl);
     end
     
 end
