@@ -1,6 +1,6 @@
 clear all
 clc
-load('result6.mat')
+load('result_digit3.mat')
 decNeg = reshape(decNeg,800,[]);
 decPos = reshape(decPos,800,[]);
 decValuesNegaTest = reshape(decValuesNegaTest,800,[]);

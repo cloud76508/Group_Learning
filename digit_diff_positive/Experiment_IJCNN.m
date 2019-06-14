@@ -21,11 +21,11 @@ for idx = 1:size(C, 2)
     mdl = train(trn.y, sparse(trn.X), option_liblinear);
     
     %%% ----- do this -----
-%       [pred, ~, ~] = predict(val.y, sparse(val.X), mdl);
-%       crossValAccuracy(idx) = sum(pred == val.y) / length(val.y);
+%   [pred, ~, ~] = predict(val.y, sparse(val.X), mdl);
+%   crossValAccuracy(idx) = sum(pred == val.y) / length(val.y);
     
     %%% ----- or specify a 'validation function' in do_binary_predict()
-  [pred, crossValAccuracy(idx), dec] = do_binary_predict(val.y, sparse(val.X), mdl);
+     [pred, crossValAccuracy(idx), dec] = do_binary_predict(val.y, sparse(val.X), mdl);
 end
     
 

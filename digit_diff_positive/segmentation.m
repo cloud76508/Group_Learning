@@ -38,14 +38,14 @@ oneImages = images(:,labels==1);
 oneLabels = ones(size(oneImages,2),1);
 
 %extract number three digit images/labels
-threeImages = images(:,labels==7);
-threeLabels = ones(size(threeImages,2),1);
+diffPosImages = images(:,labels==9);
+diffPosLabels = ones(size(diffPosImages,2),1);
 
 %creat positive/negative segments (300:1000)
 n = 1;
 while n <= 80
     segment = [];
-    randomOrder1 = randperm(10000);
+    randomOrder1 = randperm(29000);
     randomOrder2 = randperm(length(oneLabels));
     segment = [evenImages(:,randomOrder1(1:720)), oneImages(:,randomOrder2(1:80))];
     digitLabel = [evenLabels(randomOrder1(1:720),1); oneLabels(randomOrder2(1:80),1)];
@@ -64,10 +64,10 @@ end
 n = 1;
 while n <= 500
     segment = [];
-    randomOrder4 = randperm(10000);
-    randomOrder5 = randperm(length(threeLabels));
-    segment = [evenImages(:,randomOrder4(1:720)), threeImages(:,randomOrder5(1:80))];
-    digitLabel = [evenLabels(randomOrder4(1:720),1); threeLabels(randomOrder5(1:80),1)];
+    randomOrder4 = randperm(29000);
+    randomOrder5 = randperm(length(diffPosLabels));
+    segment = [evenImages(:,randomOrder4(1:720)), diffPosImages(:,randomOrder5(1:80))];
+    digitLabel = [evenLabels(randomOrder4(1:720),1); diffPosLabels(randomOrder5(1:80),1)];
     
     randomOrder6 = randperm(length(digitLabel));
     segment = segment(:,randomOrder6);
@@ -84,7 +84,7 @@ n = 1;
 while n <= 580
     segment = [];
     %randomOrder1 = randperm(19000)+10000;
-    randomOrder1 = randperm(10000);
+    randomOrder1 = randperm(29000);
     segment = evenImages(:,randomOrder1(1:800));
     digitLabel = evenLabels(randomOrder1(1:800),1);
     
