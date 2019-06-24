@@ -1,10 +1,13 @@
 clear all
 clc
-load('result_digit3.mat')
+load('result_digit9_balanced.mat')
 decNeg = reshape(decNeg,800,[]);
 decPos = reshape(decPos,800,[]);
 decValuesNegaTest = reshape(decValuesNegaTest,800,[]);
 decValuesPosiTest = reshape(decValuesPosiTest,800,[]);
+
+thr1 = quantile(mean(decNeg),1);
+thr2 = quantile(std(decNeg),1);
 
 figure(1)
 msz = 8;
@@ -58,8 +61,8 @@ hold off
 figure(3)
 thr1 = quantile(mean(decNeg),1);
 thr2 = quantile(std(decNeg),1);
-patch([thr1 -0.65 -0.65 thr1], [thr2 thr2 0.26 0.26],'g') %shade positive prediction area
-hold on
+% patch([thr1 -0.65 -0.65 thr1], [thr2 thr2 0.26 0.26],'g') %shade positive prediction area
+% hold on
 scatter(mean(decNeg),std(decNeg),'r')
 hold on
 scatter(mean(decPos),std(decPos),'b')
@@ -75,8 +78,8 @@ hold off
 figure(4)
 thr1 = quantile(mean(decNeg),1);
 thr2 = quantile(std(decNeg),1);
-patch([thr1 -0.65 -0.65 thr1], [thr2 thr2 0.26 0.26],'g') %shade positive prediction area
-hold on
+% patch([thr1 -0.65 -0.65 thr1], [thr2 thr2 0.26 0.26],'g') %shade positive prediction area
+% hold on
 scatter(mean(decValuesNegaTest),std(decValuesNegaTest),'r')
 hold on
 scatter(mean(decValuesPosiTest),std(decValuesPosiTest),'b')
@@ -87,3 +90,21 @@ plot([-0.85 -0.65],[thr2 thr2],'--','LineWidth',1,'Color',[0,0,0])
 xlabel('\mu')
 ylabel('\sigma')
 hold off
+
+
+SPCount = 0; 
+for n = 1:size(decValuesNegaTest,2)
+   if mean(decValuesNegaTest(:,n)) < thr1 && std(decValuesNegaTest(:,n)) < thr2
+    SPCount = SPCount+1;
+   end
+end
+SP = SPCount/size(decValuesNegaTest,2)
+
+
+SSCount = 0; 
+for n = 1:size(decValuesPosiTest,2)
+   if mean(decValuesPosiTest(:,n)) > thr1 || std(decValuesPosiTest(:,n)) > thr2
+    SSCount = SSCount+1;
+   end
+end
+SS = SSCount/size(decValuesPosiTest,2)

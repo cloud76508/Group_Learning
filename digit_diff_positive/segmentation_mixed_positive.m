@@ -38,7 +38,7 @@ oneImages = images(:,labels==1);
 oneLabels = ones(size(oneImages,2),1);
 
 %extract number three digit images/labels
-diffLabel = 3;
+diffLabel = 9;
 diffPosImages = images(:,labels==diffLabel);
 diffPosLabels = zeros(size(diffPosImages,2),1)+diffLabel;
 
@@ -84,8 +84,8 @@ end
 n = 1;
 while n <= 580
     segment = [];
-    %randomOrder1 = randperm(19000)+10000;
-    randomOrder1 = randperm(29000);
+    randomOrder1 = randperm(19000)+10000;
+    %randomOrder1 = randperm(29000);
     segment = evenImages(:,randomOrder1(1:800));
     digitLabel = evenLabels(randomOrder1(1:800),1);
     

@@ -12,7 +12,7 @@ positiveDiffList = dir(fullfile([pos_diff_feature_path '*.mat']));
 
 %load training data
 trainPositiveData = [];
-for n =1:5
+for n =1:40
     temp = [];
     temp = load([pos_feature_path positiveList(n).name]);
     %trainPositiveData = [trainPositiveData, temp.segment];

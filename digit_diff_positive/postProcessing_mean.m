@@ -8,7 +8,7 @@ clc
 %load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
 %load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_unbalanced\Results_feature.mat')
 
-load('C:\Users\User\Documents\GitHub\Group_Learning\digit_diff_positive\result_digit9.mat')
+load('C:\Users\User\Documents\GitHub\Group_Learning\digit_diff_positive\result_digit3_balanced_test.mat')
 
 decNeg = reshape(decNeg,800,[]);
 decPos = reshape(decPos,800,[]);
