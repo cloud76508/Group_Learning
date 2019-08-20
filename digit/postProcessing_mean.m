@@ -10,23 +10,42 @@ load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_unbalanced\Results_feature
 
 decNeg = reshape(decNeg,800,[]);
 decPos = reshape(decPos,800,[]);
+
+decValNeg = reshape(decValNeg,800,[]);
+decValPos = reshape(decValPos,800,[]);
+
 %decValuesNegaTest = reshape(decValuesNegaTest,800,[]);
 %decValuesPosiTest = reshape(decValuesPosiTest,800,[]);
 
 decValuesNegaTest = decValuesNegaTest';
 decValuesPosiTest = decValuesPosiTest';
 
+%%Using training data to decide threshold
+% trainSS = [];
+% n = 1;
+% qunValue = [1:-0.05:0];
+% for m = 1:length(qunValue)
+%    tempThr = quantile(mean(decNeg),qunValue(m));
+%    trainSS(n,1) = sum(mean(decPos)>tempThr)/size(decPos,2);
+%    n = n+1;
+% end
+% [V,I] =  max(trainSS);
+% qunValue(I)
+% thr1 = quantile(mean(decNeg),qunValue(I));
+
+%%Using validation data to decide threshold
 trainSS = [];
 n = 1;
 qunValue = [1:-0.05:0];
 for m = 1:length(qunValue)
-   tempThr = quantile(mean(decNeg),qunValue(m));
-   trainSS(n,1) = sum(mean(decPos)>tempThr)/size(decPos,2);
+   tempThr = quantile(mean(decValNeg),qunValue(m));
+   trainSS(n,1) = sum(mean(decValPos)>tempThr)/size(decValPos,2);
    n = n+1;
 end
 [V,I] =  max(trainSS);
 qunValue(I)
-thr1 = quantile(mean(decNeg),qunValue(I));
+thr1 = quantile(mean(decValNeg),qunValue(I));
+
 
 sprintf('SS = %d', sum(mean(decValuesPosiTest) > thr1)/size(decValuesPosiTest,2)*100)
 sprintf('SP = %d', sum(mean(decValuesNegaTest) <= thr1)/size(decValuesNegaTest,2)*100)

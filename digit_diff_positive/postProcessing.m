@@ -1,8 +1,13 @@
 clear all
 clc
-load('result_digit9_balanced.mat')
+%load('result_digit9_balanced.mat')
+load('C:\Users\User\Documents\GitHub\Group_Learning\digit_diff_positive\one_class_results_unbalaned.mat')
 decNeg = reshape(decNeg,800,[]);
 decPos = reshape(decPos,800,[]);
+
+decValNeg = reshape(decValNeg,800,[]);
+decValPos = reshape(decValPos,800,[]);
+
 decValuesNegaTest = reshape(decValuesNegaTest,800,[]);
 decValuesPosiTest = reshape(decValuesPosiTest,800,[]);
 
@@ -66,10 +71,10 @@ thr2 = quantile(std(decNeg),1);
 scatter(mean(decNeg),std(decNeg),'r')
 hold on
 scatter(mean(decPos),std(decPos),'b')
-hold on
-plot([thr1 thr1],[0.14 0.26],'--','LineWidth',1,'Color',[0,0,0])
-hold on
-plot([-0.85 -0.65],[thr2 thr2],'--','LineWidth',1,'Color',[0,0,0])
+% hold on
+% plot([thr1 thr1],[0.14 0.26],'--','LineWidth',1,'Color',[0,0,0])
+% hold on
+% plot([-0.85 -0.65],[thr2 thr2],'--','LineWidth',1,'Color',[0,0,0])
 xlabel('\mu')
 ylabel('\sigma')
 hold off
@@ -83,10 +88,10 @@ thr2 = quantile(std(decNeg),1);
 scatter(mean(decValuesNegaTest),std(decValuesNegaTest),'r')
 hold on
 scatter(mean(decValuesPosiTest),std(decValuesPosiTest),'b')
-hold on
-plot([thr1 thr1],[0.14 0.26],'--','LineWidth',1,'Color',[0,0,0])
-hold on
-plot([-0.85 -0.65],[thr2 thr2],'--','LineWidth',1,'Color',[0,0,0])
+% hold on
+% plot([thr1 thr1],[0.14 0.26],'--','LineWidth',1,'Color',[0,0,0])
+% hold on
+% plot([-0.85 -0.65],[thr2 thr2],'--','LineWidth',1,'Color',[0,0,0])
 xlabel('\mu')
 ylabel('\sigma')
 hold off
