@@ -19,7 +19,7 @@ for n =1:10
 end
 
 trainNegativeData = [];
-for n =1:100
+for n =1:10
     temp = [];
     temp = load([negativeFeaturesDir negtiveList(n).name]);
     temp.segment = reshape(temp.segment, [],1); % for standard SVM
@@ -28,7 +28,7 @@ end
 
 %load validation data
 valPositiveData = [];
-for n =101:200
+for n =101:110
     temp = [];
     temp = load([positiveFeaturesDir positiveList(n).name]);
     temp.segment = reshape(temp.segment, [],1); % for standard SVM
@@ -36,7 +36,7 @@ for n =101:200
 end
 
 valNegativeData = [];
-for n =101:200
+for n =101:110
     temp = [];
     temp = load([negativeFeaturesDir negtiveList(n).name]);
     temp.segment = reshape(temp.segment, [],1); % for standard SVM

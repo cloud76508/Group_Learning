@@ -11,14 +11,14 @@ negtiveList = dir(fullfile([negativeFeaturesDir '*.mat']));
 
 %load training data
 trainPositiveData = [];
-for n =1:100
+for n =1:10
     temp = [];
     temp = load([positiveFeaturesDir positiveList(n).name]);
     trainPositiveData = [trainPositiveData, temp.segment];
 end
 
 trainNegativeData = [];
-for n =1:100
+for n =1:10
     temp = [];
     temp = load([negativeFeaturesDir negtiveList(n).name]);
     trainNegativeData = [trainNegativeData, temp.segment];
@@ -26,14 +26,14 @@ end
 
 %load validation data
 valPositiveData = [];
-for n =101:200
+for n =101:110
     temp = [];
     temp = load([positiveFeaturesDir positiveList(n).name]);
     valPositiveData = [valPositiveData, temp.segment];
 end
 
 valNegativeData = [];
-for n =101:200
+for n =101:110
     temp = [];
     temp = load([negativeFeaturesDir negtiveList(n).name]);
     valNegativeData = [valNegativeData, temp.segment];

@@ -3,22 +3,22 @@ close all;
 clc;
 loadData_standardSVM
 
-
 trn.X = [trainNegativeData';trainPositiveData'];
 trn.y = [-ones(size(trainNegativeData,2),1);ones(size(trainPositiveData,2),1)];
+%trn.y = [randlabel(size(trainNegativeData,2));randlabel(size(trainPositiveData,2))];
 
 val.X = [valNegativeData'; valPositiveData'];
 val.y = [-ones(size(valNegativeData,2),1);ones(size(valPositiveData,2),1)];
+%val.y = [randlabel(size(valNegativeData,2));randlabel(size(valPositiveData,2))];
+
 
 % C parameter of SVM
 C = 10.^(-4:1:4);
 %C = 10.^(-1:1:1);
 
-% weight parameter of SVM
-weight = 1;
 
 for idx = 1:size(C, 2)
-    option_liblinear = ['-w+1 ', num2str(weight), ' -w-1 1 -c ', num2str(C(idx)), ' -s 1 -q'];
+    option_liblinear = [' -c ', num2str(C(idx)), ' -s 1 -q'];
     mdl = train(trn.y, sparse(trn.X), option_liblinear);
     
     %%% ----- do this -----
@@ -43,12 +43,14 @@ opt_C = C(opt_C_idx);
 % -------------------------------------------------------------
 % construct the training data
 
-option_liblinear = ['-w+1 ', num2str(weight), ' -w-1 1 -c ', num2str(opt_C), ' -s 1 -q'];
+option_liblinear = ['-c ', num2str(opt_C), ' -s 1 -q'];
 model = train(trn.y, sparse(trn.X), option_liblinear);
 
+fprintf('training results:\n')
 [~, ~, decPos] = predict(ones(size(trainPositiveData,2),1), sparse(trainPositiveData'), model);
 [~, ~, decNeg] = predict(-ones(size(trainNegativeData,2),1), sparse(trainNegativeData'), model);
 
+fprintf('validation results:\n')
 [~, ~, decValPos] = predict(ones(size(valPositiveData,2),1), sparse(valPositiveData'), model);
 [~, ~, decValNeg] = predict(-ones(size(valNegativeData,2),1), sparse(valNegativeData'), model);
 
@@ -58,10 +60,14 @@ model = train(trn.y, sparse(trn.X), option_liblinear);
 decValuesPosiTest = [];
 decValuesNegaTest = [];
 
+
+fprintf('test results:\n')
 [~, ~, tempPosiTest] = predict(ones(size(testPositiveData,2), 1), sparse(testPositiveData'), model);
+%[~, ~, tempPosiTest] = predict(randlabel(size(testPositiveData,2)), sparse(testPositiveData'), model);
 decValuesPosiTest = [decValuesPosiTest; tempPosiTest'];
 
 [~, ~, tempNegaTest] = predict(-ones(size(testNegativeData,2), 1), sparse(testNegativeData'), model);
+%[~, ~, tempNegaTest] = predict(randlabel(size(testNegativeData,2)), sparse(testNegativeData'), model);
 decValuesNegaTest = [decValuesNegaTest; tempNegaTest'];
 
 
