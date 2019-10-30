@@ -3,22 +3,11 @@ clc
 
 images = loadMNISTImages('train-images.idx3-ubyte');
 labels = loadMNISTLabels('train-labels.idx1-ubyte');
-%data source: http://yann.lecun.com/exdb/mnist/
-%Source: http://ufldl.stanford.edu/wiki/index.php/Using_the_MNIST_Dataset.
-
  
 %display_network(images(:,1:100)); % Show the first 100 images
 %disp(labels(1:10));
 
-% fileID = fopen('train-images.idx3-ubyte');
-% A = fread(fileID);
-% fileLabel = fopen('train-labels.idx1-ubyte');
-% B = fread(fileLabel);
-%imshow(reshape(segment(:,1),[28,28]))
-
 %extract digit images/labels
-Image0 = images(:,labels==0);
-Label0 = ones(size(Image0,2),1)-1;
 Image1 = images(:,labels==1);
 Label1 = ones(size(Image1,2),1);
 Image2 = images(:,labels==2);
@@ -43,10 +32,10 @@ Label9 = ones(size(Image9,2),1)+8;
 for n = 1:700
     segment = [];
     
-    tempRandom = randperm(size(Image7,2));
-    tempImages = [Image7(:, tempRandom(1)), ...
-        Image7(:, tempRandom(2)),Image7(:, tempRandom(3)),... 
-        Image7(:, tempRandom(4))];
+    tempRandom = randperm(size(Image1,2));
+    tempImages = [Image1(:, tempRandom(1)), ...
+        Image1(:, tempRandom(2)),Image1(:, tempRandom(3)),... 
+        Image1(:, tempRandom(4))];
     segment = [segment,tempImages];
     
     tempRandom = randperm(size(Image2,2));
@@ -66,6 +55,8 @@ for n = 1:700
         Image6(:, tempRandom(2)),Image6(:, tempRandom(3)),... 
         Image6(:, tempRandom(4))];
     segment = [segment,tempImages];
+    
+    segment = segment(:,randperm(size(segment,2))); % randomize the order of digits in the matrix
     
     saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\positive\\segment%d.mat',n);
     save(saveSeg,'segment')
@@ -98,6 +89,8 @@ for n = 1:700
         Image4(:, tempRandom(2)),Image4(:, tempRandom(3)),... 
         Image4(:, tempRandom(4))];
     segment = [segment,tempImages];
+    
+    segment = segment(:,randperm(size(segment,2))); % randomize the order of digits in the matrix
     
     saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative\\segment%d.mat',n);
     save(saveSeg,'segment')

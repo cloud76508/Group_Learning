@@ -46,13 +46,21 @@ opt_C = C(opt_C_idx);
 option_liblinear = ['-c ', num2str(opt_C), ' -s 1 -q'];
 model = train(trn.y, sparse(trn.X), option_liblinear);
 
+fprintf('------------------------------------------------------------\n')
 fprintf('training results:\n')
+fprintf('True positive:\n')
 [~, ~, decPos] = predict(ones(size(trainPositiveData,2),1), sparse(trainPositiveData'), model);
+fprintf('True negative:\n')
 [~, ~, decNeg] = predict(-ones(size(trainNegativeData,2),1), sparse(trainNegativeData'), model);
+fprintf('------------------------------------------------------------\n')
 
+fprintf('------------------------------------------------------------\n')
 fprintf('validation results:\n')
+fprintf('True positive:\n')
 [~, ~, decValPos] = predict(ones(size(valPositiveData,2),1), sparse(valPositiveData'), model);
+fprintf('True negative:\n')
 [~, ~, decValNeg] = predict(-ones(size(valNegativeData,2),1), sparse(valNegativeData'), model);
+fprintf('------------------------------------------------------------\n')
 
 %--------------------------------------------------------------
 % apply model to the test data
@@ -60,16 +68,18 @@ fprintf('validation results:\n')
 decValuesPosiTest = [];
 decValuesNegaTest = [];
 
-
+fprintf('------------------------------------------------------------\n')
 fprintf('test results:\n')
+fprintf('True positive:\n')
 [~, ~, tempPosiTest] = predict(ones(size(testPositiveData,2), 1), sparse(testPositiveData'), model);
 %[~, ~, tempPosiTest] = predict(randlabel(size(testPositiveData,2)), sparse(testPositiveData'), model);
 decValuesPosiTest = [decValuesPosiTest; tempPosiTest'];
 
+fprintf('True negative:\n')
 [~, ~, tempNegaTest] = predict(-ones(size(testNegativeData,2), 1), sparse(testNegativeData'), model);
 %[~, ~, tempNegaTest] = predict(randlabel(size(testNegativeData,2)), sparse(testNegativeData'), model);
 decValuesNegaTest = [decValuesNegaTest; tempNegaTest'];
-
+fprintf('------------------------------------------------------------\n')
 
 
 % %--------------------------------------------------------------

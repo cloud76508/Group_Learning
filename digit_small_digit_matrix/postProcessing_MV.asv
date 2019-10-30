@@ -1,7 +1,8 @@
 clear all
 clc
 %load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
-load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\group_1.mat')
+%load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_1.mat')
+load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_1_50p.mat')
 
 decNeg = reshape(decNeg,16,[]);
 decPos = reshape(decPos,16,[]);
@@ -43,8 +44,8 @@ for n = 1:size(decValuesIntTest,2)
     end
 end
 
-sprintf('SS = %d', TP/size(decValuesPreTest,2)*100)
-sprintf('SP = %d', TN/size(decValuesIntTest,2)*100)
+fprintf('FN = %.3f\n', 1-TP/size(decValuesPreTest,2))
+fprintf('FP = %.3f\n', 1-TN/size(decValuesIntTest,2))
 
 %mtehod 2 Majority vote
 TP_train = 0;
@@ -65,8 +66,8 @@ for n = 1:size(decNeg,2)
     end
 end
 
-sprintf('SS_train = %d', TP_train/size(decPos,2)*100)
-sprintf('SP_train = %d', TN_train/size(decNeg,2)*100)
+fprintf('FN_train = %.3f\n', 1-TP_train/size(decPos,2))
+fprintf('FP_train = %.3f\n', 1-TN_train/size(decNeg,2))
 
 % figure(1)
 % msz = 8;
