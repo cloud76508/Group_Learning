@@ -1,0 +1,31 @@
+exp = 1;
+
+negResults = reshape(decNeg(:,exp),groupSize,[])';
+posResults = reshape(decPos(:,exp),groupSize,[])';
+meanNeg = mean(decNeg');
+meanPos = mean(decPos');
+
+testResults = reshape(decTest(:,exp),groupSize,[])';
+
+for n = 1:size(testResults,1)
+    if min(meanPos)> max(meanNeg)
+        if mean(testResults(n,:)') > max(meanNeg)
+            tstResults = [tstResults;1]
+        else
+            tstResults = [tstResults; -1]
+        end
+    else
+        if mean(testResults(n,:)') > min(meanPos)
+            tstResults = [tstResults;1]
+        else
+            tstResults = [tstResults; -1]
+        end
+    end
+end
+
+scatter(meanNeg,ones(length(meanNeg),1))
+hold on
+scatter(meanPos,ones(length(meanPos),1))
+hold on
+scatter(mean(testResults'),[1,1],'x')
+hold off
