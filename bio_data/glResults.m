@@ -1,3 +1,7 @@
+clear all
+clc
+load GL_size_14
+
 tstResults = [];
 for exp = 1:12
     
@@ -32,6 +36,8 @@ for exp = 1:12
     hold on
     scatter(mean(testResults'),[1,1],'x')
     hold off
+    
+    
 end
 
 tstResults = reshape(tstResults,2,[])';

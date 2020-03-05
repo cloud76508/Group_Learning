@@ -4,7 +4,7 @@ clc;
 
 loadData
 
-[rawData,maxV,minV] = normalization(rawData);
+[rawData,maxV,minV] = normalization(rawData,1);
 
 for n =1:length(label)
    if label(n) ==0
@@ -14,10 +14,8 @@ end
 
 originLabel = label;
 
-%cut some features for performing group learning
-rawData(:,9801:end) = [];
 
-groupSize = 14; 
+groupSize = 10; 
 
 groupData = [];
 for n =1:size(rawData,1)
@@ -36,6 +34,9 @@ weight = 1;
 %weight = 0.1875;
 
 
+decPos = [];
+decNeg = [];
+decTest = [];
 for n = 1:12
     positiveData = rawData(label==1,:);
     negativeData = rawData(label==-1,:);
@@ -98,37 +99,36 @@ for n = 1:12
     model = train(trainSet.y, sparse(trainSet.X), option_liblinear);
     
     % outputs for training data
-    decPos = [];
-    decNeg = [];
-    [~, ~, decPos] = predict(ones(size(trainPos,1),1), sparse(trainPos), model);
-    [~, ~, decNeg] = predict(-ones(size(trainNeg,1),1), sparse(trainNeg), model);
+    [~, ~, decPos(:,n)] = predict(ones(size(trainPos,1),1), sparse(trainPos), model);
+    [~, ~, decNeg(:,n)] = predict(-ones(size(trainNeg,1),1), sparse(trainNeg), model);
     
-    decNeg = reshape(decNeg,groupSize,[])';
-    decPos = reshape(decPos,groupSize,[])';
-    meanNeg = mean(decNeg');
-    meanPos = mean(decPos');
-    
-    [~, ~, decTest] = predict(test.y, sparse(test.X), model);
-    
-    decTest = reshape(decTest,groupSize,[])';
-    
-    for n = 1:size(decTest,1)
-        if min(meanPos)> max(meanNeg)
-            if mean(decTest(n,:)') > max(meanNeg)
-                tstResults = [tstResults;1]
-            else
-                tstResults = [tstResults; -1]
-            end
-        else
-            if mean(decTest(n,:)') > min(meanPos)
-                tstResults = [tstResults;1]
-            else
-                tstResults = [tstResults; -1]
-            end
-        end
-    end
+    [~, ~, decTest(:,n)] = predict(test.y, sparse(test.X), model);
+  
+%     decNeg = reshape(decNeg,groupSize,[])';
+%     decPos = reshape(decPos,groupSize,[])';
+%     meanNeg = mean(decNeg');
+%     meanPos = mean(decPos');
+%     
+%     decTest = reshape(decTest,groupSize,[])';
+%     
+%     for n = 1:size(decTest,1)
+%         if min(meanPos)> max(meanNeg)
+%             if mean(decTest(n,:)') > max(meanNeg)
+%                 tstResults = [tstResults;1]
+%             else
+%                 tstResults = [tstResults; -1]
+%             end
+%         else
+%             if mean(decTest(n,:)') > min(meanPos)
+%                 tstResults = [tstResults;1]
+%             else
+%                 tstResults = [tstResults; -1]
+%             end
+%         end
+%     end
 end
-tstResults = reshape(tstResults,2,[])';
-
-fprintf('FN',sum(tstResults(:,1)~=1)/);
+% tstResults = reshape(tstResults,2,[])';
+% 
+% fprintf('\nFN= %f\n',sum(tstResults(:,1)==-1)/size(tstResults,1));
+% fprintf('FP= %f\n',sum(tstResults(:,2)==1)/size(tstResults,1));
 

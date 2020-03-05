@@ -8,6 +8,8 @@ clc
 %load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
 load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_unbalanced\Results_feature.mat')
 
+%load('C:\Users\User\Desktop\IJCNN\digit\Results\1Percent\Results.mat')
+
 decNeg = reshape(decNeg,800,[]);
 decPos = reshape(decPos,800,[]);
 

@@ -29,7 +29,7 @@ end
 
 %load test data
 testPositiveData = [];
-for n =6:55
+for n =101:600
     temp = [];
     temp = load([positiveFeaturesDir positiveList(n).name]);
     tempSparse = reshape(temp.feature, [],1);
@@ -37,7 +37,7 @@ for n =6:55
 end
 
 testNegativeData = [];
-for n =41:90
+for n =101:600
     temp = [];
     temp = load([negativeFeaturesDir negtiveList(n).name]);
     tempSparse = reshape(temp.feature, [],1);

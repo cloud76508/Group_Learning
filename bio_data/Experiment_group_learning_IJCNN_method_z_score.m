@@ -4,7 +4,7 @@ clc;
 
 loadData
 
-[rawData,maxV,minV] = normalization(rawData,1);
+[rawData,V1,V2] = normalization(rawData,2);
 
 for n =1:length(label)
    if label(n) ==0
@@ -15,9 +15,9 @@ end
 originLabel = label;
 
 %cut some features for performing group learning
-rawData(:,9851:end) = [];
+rawData(:,9801:end) = [];
 
-groupSize = 10; 
+groupSize = 100; 
 
 groupData = [];
 for n =1:size(rawData,1)
@@ -84,7 +84,7 @@ for n = 1:12
             crossValAccuracy(idx, fold) = sum(pred == val.y) / length(val.y);
             
             %%% ----- or specify a 'validation function' in do_binary_predict()
-            % [pred, crossValAccuracy(idx,fold), dec] = do_binary_predict(val.y, sparse(val.X), mdl);
+             %[pred, crossValAccuracy(idx,fold), dec] = do_binary_predict(val.y, sparse(val.X), mdl);
         end
     end
     
@@ -103,11 +103,8 @@ for n = 1:12
     % outputs for training data
     [~, ~, decPos(:,n)] = predict(ones(size(trainPos,1),1), sparse(trainPos), model);
     [~, ~, decNeg(:,n)] = predict(-ones(size(trainNeg,1),1), sparse(trainNeg), model);
-    [~, ~, decTest(:,n)] = predict(test.y, sparse(test.X), model);    
-
-%     [~, ~, decPos(:,n)] = do_binary_predict(ones(size(trainPos,1),1), sparse(trainPos), model);
-%     [~, ~, decNeg(:,n)] = do_binary_predict(-ones(size(trainNeg,1),1), sparse(trainNeg), model);   
-%     [~, ~, decTest(:,n)] = do_binary_predict(test.y, sparse(test.X), model);
+    
+    [~, ~, decTest(:,n)] = predict(test.y, sparse(test.X), model);
   
 %     decNeg = reshape(decNeg,groupSize,[])';
 %     decPos = reshape(decPos,groupSize,[])';
