@@ -2,7 +2,8 @@ clear all
 clc
 %load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
 %load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_1.mat')
-load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_5_75p.mat')
+%load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_5_75p.mat')
+load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\ordered_digit_matrix.mat')
 
 decNeg = reshape(decNeg,16,[]);
 decPos = reshape(decPos,16,[]);

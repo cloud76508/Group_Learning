@@ -1,16 +1,16 @@
 clear all
 clc
-load GL_size_5
+load Results_optimally_select_group_size_5
 
 tstResults = [];
 for exp = 1:12
     
-    negResults = reshape(decNeg(:,exp),groupSize,[])';
-    posResults = reshape(decPos(:,exp),groupSize,[])';
+    negResults = reshape(decNeg{exp,1},OptimalGS(exp),[])';
+    posResults = reshape(decPos{exp,1},OptimalGS(exp),[])';
     meanNeg = mean(negResults');
     meanPos = mean(posResults');
     
-    testResults = reshape(decTest(:,exp),groupSize,[])';
+    testResults = reshape(decTest{exp,1},OptimalGS(exp),[])';
     
     
     for n = 1:size(testResults,1)
