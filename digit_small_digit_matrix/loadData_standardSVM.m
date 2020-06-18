@@ -1,6 +1,4 @@
-clear all;
-close all;
-clc;
+function [trainPositiveData, trainNegativeData, valPositiveData, valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(train_size, val_size, test_size)
 
 positiveFeaturesDir = 'C:\Users\User\Desktop\digit_segment\small_matrix\positive\';
 positiveList = dir(fullfile([positiveFeaturesDir '*.mat']));
@@ -11,7 +9,7 @@ negtiveList = dir(fullfile([negativeFeaturesDir '*.mat']));
 
 %load training data
 trainPositiveData = [];
-for n =1:10
+for n =1:train_size
     temp = [];
     temp = load([positiveFeaturesDir positiveList(n).name]);
     temp.segment = reshape(temp.segment, [],1); % for standard SVM
@@ -19,7 +17,7 @@ for n =1:10
 end
 
 trainNegativeData = [];
-for n =1:10
+for n =1:train_size
     temp = [];
     temp = load([negativeFeaturesDir negtiveList(n).name]);
     temp.segment = reshape(temp.segment, [],1); % for standard SVM
@@ -28,7 +26,7 @@ end
 
 %load validation data
 valPositiveData = [];
-for n =101:110
+for n =201:200+val_size
     temp = [];
     temp = load([positiveFeaturesDir positiveList(n).name]);
     temp.segment = reshape(temp.segment, [],1); % for standard SVM
@@ -36,7 +34,7 @@ for n =101:110
 end
 
 valNegativeData = [];
-for n =101:110
+for n =201:200+val_size
     temp = [];
     temp = load([negativeFeaturesDir negtiveList(n).name]);
     temp.segment = reshape(temp.segment, [],1); % for standard SVM
@@ -57,7 +55,7 @@ end
 
 %load test data
 testPositiveData = [];
-for n =201:700
+for n =501:500+test_size
     temp = [];
     temp = load([positiveFeaturesDir positiveList(n).name]);
     temp.segment = reshape(temp.segment, [],1); % for standard SVM
@@ -65,7 +63,7 @@ for n =201:700
 end
 
 testNegativeData = [];
-for n =201:700
+for n =501:500+test_size
     temp = [];
     temp = load([negativeFeaturesDir negtiveList(n).name]);
     temp.segment = reshape(temp.segment, [],1); % for standard SVM

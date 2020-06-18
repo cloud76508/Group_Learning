@@ -1,7 +1,10 @@
 clear all;
 close all;
 clc;
-loadData_standardSVM
+sample_size = 160;
+[trainPositiveData, trainNegativeData, valPositiveData,...
+    valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(sample_size, sample_size, 500);
+
 
 trn.X = [trainNegativeData';trainPositiveData'];
 trn.y = [-ones(size(trainNegativeData,2),1);ones(size(trainPositiveData,2),1)];

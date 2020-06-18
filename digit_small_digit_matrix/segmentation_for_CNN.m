@@ -3,11 +3,22 @@ clc
 
 images = loadMNISTImages('train-images.idx3-ubyte');
 labels = loadMNISTLabels('train-labels.idx1-ubyte');
+%data source: http://yann.lecun.com/exdb/mnist/
+%Source: http://ufldl.stanford.edu/wiki/index.php/Using_the_MNIST_Dataset.
+
  
 %display_network(images(:,1:100)); % Show the first 100 images
 %disp(labels(1:10));
 
+% fileID = fopen('train-images.idx3-ubyte');
+% A = fread(fileID);
+% fileLabel = fopen('train-labels.idx1-ubyte');
+% B = fread(fileLabel);
+%imshow(reshape(segment(:,1),[28,28]))
+
 %extract digit images/labels
+Image0 = images(:,labels==0);
+Label0 = ones(size(Image0,2),1)-1;
 Image1 = images(:,labels==1);
 Label1 = ones(size(Image1,2),1);
 Image2 = images(:,labels==2);
@@ -56,7 +67,21 @@ for n = 1:1000
         Image6(:, tempRandom(4))];
     segment = [segment,tempImages];
     
-    segment = segment(:,randperm(size(segment,2))); % randomize the order of digits in the matrix
+    % reshape segment to 28*4x28*4
+    segment_raw = zeros(28*4,28*4);
+    i = 0;
+    j = 0;
+    for m = 1:size(segment,2)
+        temp = segment(:,m);
+        temp = reshape(temp,[28,28]);
+        if j == 4 && i<4
+           i = i+1;
+           j = 0;
+        end
+        segment_raw(i*28+1:(i+1)*28,j*28+1:(j+1)*28) = temp;
+        j = j+1;
+    end
+    segment = segment_raw;
     
     saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\positive\\segment%d.mat',n);
     save(saveSeg,'segment')
@@ -90,12 +115,26 @@ for n = 1:1000
         Image4(:, tempRandom(4))];
     segment = [segment,tempImages];
     
-    segment = segment(:,randperm(size(segment,2))); % randomize the order of digits in the matrix
+    % reshape segment to 28*4x28*4
+    segment_raw = zeros(28*4,28*4);
+    i = 0;
+    j = 0;
+    for m = 1:size(segment,2)
+        temp = segment(:,m);
+        temp = reshape(temp,[28,28]);
+        if j == 4 && i<4
+           i = i+1;
+           j = 0;
+        end
+        segment_raw(i*28+1:(i+1)*28,j*28+1:(j+1)*28) = temp;
+        j = j+1;
+    end
+    segment = segment_raw;
     
     saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative\\segment%d.mat',n);
     save(saveSeg,'segment')
 end
 
-
+%display_network(reshape(segment,[],1))
 
 

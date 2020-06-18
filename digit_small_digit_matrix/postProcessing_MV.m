@@ -1,9 +1,9 @@
-clear all
-clc
-%load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
-%load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_1.mat')
-%load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_5_75p.mat')
-load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\ordered_digit_matrix.mat')
+% clear all
+% clc
+% %load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
+% load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_5.mat')
+% %load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_5_75p.mat')
+% %load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\test.mat')
 
 decNeg = reshape(decNeg,16,[]);
 decPos = reshape(decPos,16,[]);
@@ -120,7 +120,7 @@ fprintf('FP_train = %.3f\n', 1-TN_train/size(decNeg,2))
 % hold on
 % plot([-1 -1],[yLimit(1) yLimit(2)],'--','LineWidth',1,'Color',[0,0,0])
 % hold off
-
+% 
 % figure(3)
 % %thr1 = quantile(mean(decNeg),1);
 % thr2 = quantile(std(decNeg),1);

@@ -58,6 +58,22 @@ for n = 1:1000
     
     segment = segment(:,randperm(size(segment,2))); % randomize the order of digits in the matrix
     
+    % reshape segment to 28*4x28*4
+    segment_raw = zeros(28*4,28*4);
+    i = 0;
+    j = 0;
+    for m = 1:size(segment,2)
+        temp = segment(:,m);
+        temp = reshape(temp,[28,28]);
+        if j == 4 && i<4
+           i = i+1;
+           j = 0;
+        end
+        segment_raw(i*28+1:(i+1)*28,j*28+1:(j+1)*28) = temp;
+        j = j+1;
+    end
+    segment = segment_raw;
+    
     saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\positive\\segment%d.mat',n);
     save(saveSeg,'segment')
 end
@@ -92,10 +108,26 @@ for n = 1:1000
     
     segment = segment(:,randperm(size(segment,2))); % randomize the order of digits in the matrix
     
+    % reshape segment to 28*4x28*4
+    segment_raw = zeros(28*4,28*4);
+    i = 0;
+    j = 0;
+    for m = 1:size(segment,2)
+        temp = segment(:,m);
+        temp = reshape(temp,[28,28]);
+        if j == 4 && i<4
+           i = i+1;
+           j = 0;
+        end
+        segment_raw(i*28+1:(i+1)*28,j*28+1:(j+1)*28) = temp;
+        j = j+1;
+    end
+    segment = segment_raw;
+    
     saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative\\segment%d.mat',n);
     save(saveSeg,'segment')
 end
 
-
+%display_network(reshape(segment,[],1))
 
 
