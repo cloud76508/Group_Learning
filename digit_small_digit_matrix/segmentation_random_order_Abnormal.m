@@ -8,6 +8,8 @@ labels = loadMNISTLabels('train-labels.idx1-ubyte');
 %disp(labels(1:10));
 
 %extract digit images/labels
+Image0 = images(:,labels==0);
+Label0 = ones(size(Image0,2),1);
 Image1 = images(:,labels==1);
 Label1 = ones(size(Image1,2),1);
 Image2 = images(:,labels==2);
@@ -27,33 +29,36 @@ Label8 = ones(size(Image8,2),1)+7;
 Image9 = images(:,labels==9);
 Label9 = ones(size(Image9,2),1)+8;
 
+min_numb= min([length(Label0),length(Label1),length(Label2),length(Label3),...
+    length(Label4),length(Label5),length(Label6),...
+    length(Label7),length(Label8),length(Label9)]);
 
 %creat positive segments [7,2,8,6;7,2,8,6;7,2,8,6;7,2,8,6]
 for n = 1:1000
     segment = [];
     
-    tempRandom = randperm(size(Image1,2));
-    tempImages = [Image1(:, tempRandom(1)), ...
-        Image1(:, tempRandom(2)),Image1(:, tempRandom(3)),... 
-        Image1(:, tempRandom(4))];
-    segment = [segment,tempImages];
-    
-    tempRandom = randperm(size(Image2,2));
+    tempRandom = randperm(min_numb);
     tempImages = [Image2(:, tempRandom(1)), ...
         Image2(:, tempRandom(2)),Image2(:, tempRandom(3)),... 
-        Image2(:, tempRandom(4))];
+        Image0(:, tempRandom(4))];
     segment = [segment,tempImages];
     
-    tempRandom = randperm(size(Image8,2));
-    tempImages = [Image8(:, tempRandom(1)), ...
-        Image8(:, tempRandom(2)),Image8(:, tempRandom(3)),... 
-        Image8(:, tempRandom(4))];
+    tempRandom = randperm(min_numb);
+    tempImages = [Image4(:, tempRandom(1)), ...
+        Image4(:, tempRandom(2)),Image4(:, tempRandom(3)),... 
+        Image0(:, tempRandom(4))];
     segment = [segment,tempImages];
     
-    tempRandom = randperm(size(Image6,2));
+    tempRandom = randperm(min_numb);
     tempImages = [Image6(:, tempRandom(1)), ...
         Image6(:, tempRandom(2)),Image6(:, tempRandom(3)),... 
-        Image6(:, tempRandom(4))];
+        Image0(:, tempRandom(4))];
+    segment = [segment,tempImages];
+    
+    tempRandom = randperm(min_numb);
+    tempImages = [Image8(:, tempRandom(1)), ...
+        Image8(:, tempRandom(2)),Image8(:, tempRandom(3)),... 
+        Image0(:, tempRandom(4))];
     segment = [segment,tempImages];
     
     segment = segment(:,randperm(size(segment,2))); % randomize the order of digits in the matrix
@@ -66,28 +71,28 @@ end
 for n = 1:1000
     segment = [];
     
-    tempRandom = randperm(size(Image1,2));
-    tempImages = [Image1(:, tempRandom(1)), ...
-        Image1(:, tempRandom(2)),Image1(:, tempRandom(3)),... 
-        Image1(:, tempRandom(4))];
-    segment = [segment,tempImages];
-    
-    tempRandom = randperm(size(Image2,2));
+    tempRandom = randperm(min_numb);
     tempImages = [Image2(:, tempRandom(1)), ...
         Image2(:, tempRandom(2)),Image2(:, tempRandom(3)),... 
         Image2(:, tempRandom(4))];
     segment = [segment,tempImages];
     
-    tempRandom = randperm(size(Image3,2));
-    tempImages = [Image3(:, tempRandom(1)), ...
-        Image3(:, tempRandom(2)),Image3(:, tempRandom(3)),... 
-        Image3(:, tempRandom(4))];
-    segment = [segment,tempImages];
-    
-    tempRandom = randperm(size(Image4,2));
+    tempRandom = randperm(min_numb);
     tempImages = [Image4(:, tempRandom(1)), ...
         Image4(:, tempRandom(2)),Image4(:, tempRandom(3)),... 
         Image4(:, tempRandom(4))];
+    segment = [segment,tempImages];
+    
+    tempRandom = randperm(min_numb);
+    tempImages = [Image6(:, tempRandom(1)), ...
+        Image6(:, tempRandom(2)),Image6(:, tempRandom(3)),... 
+        Image6(:, tempRandom(4))];
+    segment = [segment,tempImages];
+    
+    tempRandom = randperm(min_numb);
+    tempImages = [Image8(:, tempRandom(1)), ...
+        Image8(:, tempRandom(2)),Image8(:, tempRandom(3)),... 
+        Image8(:, tempRandom(4))];
     segment = [segment,tempImages];
     
     segment = segment(:,randperm(size(segment,2))); % randomize the order of digits in the matrix

@@ -34,7 +34,7 @@ oneLabels = ones(size(oneImages,2),1);
 
 %creat positive/negative segments (300:1000)
 n = 1;
-while n <= 300
+while n <= 1000
     segment = [];
     randomOrder1 = randperm(10000);
     randomOrder2 = randperm(length(oneLabels));
@@ -45,8 +45,8 @@ while n <= 300
     segment = segment(:,randomOrder3);
     digitLabel = digitLabel(randomOrder3,1);
     
-    saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit\\positive\\segment%d.mat',n);
-    saveLab = sprintf('C:\\Users\\User\\Desktop\\digit\\positive\\label%d.mat',n);
+    saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\positive\\segment%d.mat',n);
+    saveLab = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\positive\\label%d.mat',n);
     save(saveSeg,'segment')
     save(saveLab,'digitLabel')
     n = n+1;
@@ -59,8 +59,8 @@ while n <= 1000
     segment = evenImages(:,randomOrder1(1:800));
     digitLabel = evenLabels(randomOrder1(1:800),1);
     
-    saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit\\negtive\\segment%d.mat',n);
-    saveLab = sprintf('C:\\Users\\User\\Desktop\\digit\\negtive\\label%d.mat',n);
+    saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\negative\\segment%d.mat',n);
+    saveLab = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\negative\\label%d.mat',n);
     save(saveSeg,'segment')
     save(saveLab,'digitLabel')
     n = n+1;

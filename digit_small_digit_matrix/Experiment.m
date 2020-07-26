@@ -1,7 +1,7 @@
 clear all;
 close all;
 clc;
-sample_size = 160;
+sample_size = 10;
 [trainPositiveData, trainNegativeData, valPositiveData,...
     valNegativeData,testPositiveList, testNegativeList]  = loadData(sample_size, sample_size, 500);
 
