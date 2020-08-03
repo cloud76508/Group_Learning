@@ -17,7 +17,7 @@ originLabel = label;
 %cut some features for performing group learning
 rawData(:,9801:end) = [];
 
-groupSize = 7; 
+groupSize = 5; 
 
 groupData = [];
 for n =1:size(rawData,1)

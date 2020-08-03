@@ -100,4 +100,6 @@ for n = 1:size(rawData,1)
     
 end
 
+SS = sum(tstResults(1:12)> 0)/12
+SP = sum(tstResults(13:end)< 0)/64
 
