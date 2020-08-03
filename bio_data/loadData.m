@@ -22,7 +22,13 @@ rawData = str2double(rawData);
 
 
 tempPos = rawData(label==1, :);
+randomPos = randperm(size(tempPos,1));
+tempPos = tempPos(randomPos,:);
+
 tempNeg = rawData(label==0, :);
+randomNeg = randperm(size(tempNeg,1));
+tempNeg = tempNeg(randomNeg,:);
+
 tempPoslabel = label(label==1, :);
 tempNeglabel = label(label==0, :);
 

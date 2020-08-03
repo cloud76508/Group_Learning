@@ -5,6 +5,7 @@ load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_unbalanced\Results_feature
 
 decNeg = reshape(decNeg,800,[]);
 decPos = reshape(decPos,800,[]);
+
 decValuesIntTest = decValuesNegaTest';
 decValuesPreTest = decValuesPosiTest';
 

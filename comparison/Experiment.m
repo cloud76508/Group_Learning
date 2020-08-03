@@ -1,8 +1,8 @@
 clear all;
 close all;
 clc;
-%loadData
-loadData_balanced
+loadData
+%loadData_balanced
 
 
 setFold = 5;

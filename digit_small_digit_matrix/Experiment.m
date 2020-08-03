@@ -1,7 +1,9 @@
 clear all;
 close all;
 clc;
-loadData
+sample_size = 10;
+[trainPositiveData, trainNegativeData, valPositiveData,...
+    valNegativeData,testPositiveList, testNegativeList]  = loadData(sample_size, sample_size, 500);
 
 
 trn.X = [trainNegativeData';trainPositiveData'];

@@ -29,7 +29,7 @@ Label9 = ones(size(Image9,2),1)+8;
 
 
 %creat positive segments [7,2,8,6;7,2,8,6;7,2,8,6;7,2,8,6]
-for n = 1:700
+for n = 1:1000
     segment = [];
     
     tempRandom = randperm(size(Image7,2));
@@ -63,7 +63,7 @@ for n = 1:700
 end
 
 %creat negative segments [1,2,3,4;1,2,3,4;1,2,3,4;1,2,3,4]
-for n = 1:700
+for n = 1:1000
     segment = [];
     
     tempRandom = randperm(size(Image1,2));
