@@ -32,7 +32,8 @@ test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(4)
 class MyModel(Model):
   def __init__(self):
     super(MyModel, self).__init__()
-    self.conv1 = Conv2D(32, 3, activation='relu')
+    #self.conv1 = Conv2D(32, 3, activation='relu') # used in the tutorials
+    self.conv1 = Conv2D(32, 5, (5,5), activation='relu') # for test
     self.flatten = Flatten()
     self.d1 = Dense(128, activation='relu')
     self.d2 = Dense(2)

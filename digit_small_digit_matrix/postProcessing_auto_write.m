@@ -1,9 +1,14 @@
- clear all
- clc
-%load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
-%load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\test.mat')
+clear all
+clc
 
-load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_R_W14_1.mat')
+%window_size_list = [4, 7, 10, 14, 20, 28, 30, 40, 50, 56];
+T_all = [];
+
+for Repeat = 1:5
+path_to_load = sprintf('C:\\Users\\User\\Documents\\GitHub\\Group_Learning\\digit_small_digit_matrix\\Results\\Group_R_W56_%d.mat', Repeat);
+path_to_write = 'C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\temp.xlsx';
+    
+load(path_to_load)
 
 method = 1;
 
@@ -45,12 +50,16 @@ if method == 1 %mean
     qunValue(I)
     thr1 = quantile(mean(decValNeg),qunValue(I));
     
+    SS_training = sum(mean(decPos) > thr1)/size(decPos,2);
+    SP_training = sum(mean(decNeg) <= thr1)/size(decNeg,2);
+    SS = sum(mean(decValuesPosiTest) > thr1)/size(decValuesPosiTest,2);
+    SP = sum(mean(decValuesNegaTest) <= thr1)/size(decValuesNegaTest,2);    
     
-    sprintf('SS_training = %d', sum(mean(decPos) > thr1)/size(decPos,2)*100)
-    sprintf('SP_training = %d', sum(mean(decNeg) <= thr1)/size(decNeg,2)*100)
+    sprintf('SS_training = %d', sum(mean(decPos) > thr1)/size(decPos,2))
+    sprintf('SP_training = %d', sum(mean(decNeg) <= thr1)/size(decNeg,2))
     
-    sprintf('SS = %d', sum(mean(decValuesPosiTest) > thr1)/size(decValuesPosiTest,2)*100)
-    sprintf('SP = %d', sum(mean(decValuesNegaTest) <= thr1)/size(decValuesNegaTest,2)*100)
+    sprintf('SS = %d', sum(mean(decValuesPosiTest) > thr1)/size(decValuesPosiTest,2))
+    sprintf('SP = %d', sum(mean(decValuesNegaTest) <= thr1)/size(decValuesNegaTest,2))
 end
 
 if method == 2 %std   
@@ -66,13 +75,17 @@ if method == 2 %std
     [V,I] =  max(trainSS);
     qunValue(I)
     thr1 = quantile(std(decValNeg),qunValue(I));
+
+    SS_training = sum(std(decPos) > thr1)/size(decPos,2);
+    SP_training = sum(std(decNeg) <= thr1)/size(decNeg,2);
+    SS = sum(std(decValuesPosiTest) > thr1)/size(decValuesPosiTest,2);
+    SP = sum(std(decValuesNegaTest) <= thr1)/size(decValuesNegaTest,2);
     
+    sprintf('SS_training = %d', sum(std(decPos) > thr1)/size(decPos,2))
+    sprintf('SP_training = %d', sum(std(decNeg) <= thr1)/size(decNeg,2))
     
-    sprintf('SS_training = %d', sum(std(decPos) > thr1)/size(decPos,2)*100)
-    sprintf('SP_training = %d', sum(std(decNeg) <= thr1)/size(decNeg,2)*100)
-    
-    sprintf('SS = %d', sum(std(decValuesPosiTest) > thr1)/size(decValuesPosiTest,2)*100)
-    sprintf('SP = %d', sum(std(decValuesNegaTest) <= thr1)/size(decValuesNegaTest,2)*100)
+    sprintf('SS = %d', sum(std(decValuesPosiTest) > thr1)/size(decValuesPosiTest,2))
+    sprintf('SP = %d', sum(std(decValuesNegaTest) <= thr1)/size(decValuesNegaTest,2))
 end
 
 if method == 3 %median   
@@ -89,12 +102,16 @@ if method == 3 %median
     qunValue(I)
     thr1 = quantile(quantile(decValNeg,0.5),qunValue(I));
     
+    SS_training = sum(quantile(decPos,0.5) > thr1)/size(decPos,2);
+    SP_training = sum(quantile(decNeg,0.50) <= thr1)/size(decNeg,2);
+    SS = sum(quantile(decValuesPosiTest,0.50) > thr1)/size(decValuesPosiTest,2);
+    SP = sum(quantile(decValuesNegaTest,0.50) <= thr1)/size(decValuesNegaTest,2);    
     
-    sprintf('SS_training = %d', sum(quantile(decPos,0.5) > thr1)/size(decPos,2)*100)
-    sprintf('SP_training = %d', sum(quantile(decNeg,0.5) <= thr1)/size(decNeg,2)*100)
+    sprintf('SS_training = %d', sum(quantile(decPos,0.5) > thr1)/size(decPos,2))
+    sprintf('SP_training = %d', sum(quantile(decNeg,0.5) <= thr1)/size(decNeg,2))
     
-    sprintf('SS = %d', sum(quantile(decValuesPosiTest,0.5) > thr1)/size(decValuesPosiTest,2)*100)
-    sprintf('SP = %d', sum(quantile(decValuesNegaTest,0.5) <= thr1)/size(decValuesNegaTest,2)*100)
+    sprintf('SS = %d', sum(quantile(decValuesPosiTest,0.5) > thr1)/size(decValuesPosiTest,2))
+    sprintf('SP = %d', sum(quantile(decValuesNegaTest,0.5) <= thr1)/size(decValuesNegaTest,2))
 end
 
 if method == 4 % 75% quantile 
@@ -111,12 +128,17 @@ if method == 4 % 75% quantile
     qunValue(I)
     thr1 = quantile(quantile(decValNeg,0.75),qunValue(I));
     
+    SS_training = sum(quantile(decPos,0.75) > thr1)/size(decPos,2);
+    SP_training = sum(quantile(decNeg,0.75) <= thr1)/size(decNeg,2);
+    SS = sum(quantile(decValuesPosiTest,0.75) > thr1)/size(decValuesPosiTest,2);
+    SP = sum(quantile(decValuesNegaTest,0.75) <= thr1)/size(decValuesNegaTest,2);
     
-    sprintf('SS_training = %d', sum(quantile(decPos,0.75) > thr1)/size(decPos,2)*100)
-    sprintf('SP_training = %d', sum(quantile(decNeg,0.75) <= thr1)/size(decNeg,2)*100)
     
-    sprintf('SS = %d', sum(quantile(decValuesPosiTest,0.75) > thr1)/size(decValuesPosiTest,2)*100)
-    sprintf('SP = %d', sum(quantile(decValuesNegaTest,0.75) <= thr1)/size(decValuesNegaTest,2)*100)
+    sprintf('SS_training = %d', sum(quantile(decPos,0.75) > thr1)/size(decPos,2))
+    sprintf('SP_training = %d', sum(quantile(decNeg,0.75) <= thr1)/size(decNeg,2))
+    
+    sprintf('SS = %d', sum(quantile(decValuesPosiTest,0.75) > thr1)/size(decValuesPosiTest,2))
+    sprintf('SP = %d', sum(quantile(decValuesNegaTest,0.75) <= thr1)/size(decValuesNegaTest,2))
 end
 
 if method == 5 % 25% quantile 
@@ -133,13 +155,19 @@ if method == 5 % 25% quantile
     qunValue(I)
     thr1 = quantile(quantile(decValNeg,0.25),qunValue(I));
     
+    SS_training = sum(quantile(decPos,0.25) > thr1)/size(decPos,2);
+    SP_training = sum(quantile(decNeg,0.25) <= thr1)/size(decNeg,2);
+    SS = sum(quantile(decValuesPosiTest,0.25) > thr1)/size(decValuesPosiTest,2);
+    SP = sum(quantile(decValuesNegaTest,0.25) <= thr1)/size(decValuesNegaTest,2);
     
-    sprintf('SS_training = %d', sum(quantile(decPos,0.25) > thr1)/size(decPos,2)*100)
-    sprintf('SP_training = %d', sum(quantile(decNeg,0.25) <= thr1)/size(decNeg,2)*100)
+    sprintf('SS_training = %d', sum(quantile(decPos,0.25) > thr1)/size(decPos,2))
+    sprintf('SP_training = %d', sum(quantile(decNeg,0.25) <= thr1)/size(decNeg,2))
     
-    sprintf('SS = %d', sum(quantile(decValuesPosiTest,0.25) > thr1)/size(decValuesPosiTest,2)*100)
-    sprintf('SP = %d', sum(quantile(decValuesNegaTest,0.25) <= thr1)/size(decValuesNegaTest,2)*100)
+    sprintf('SS = %d', sum(quantile(decValuesPosiTest,0.25) > thr1)/size(decValuesPosiTest,2))
+    sprintf('SP = %d', sum(quantile(decValuesNegaTest,0.25) <= thr1)/size(decValuesNegaTest,2))
 end
+T = table(SS_training,SP_training,SS,SP);
+T_all = [T_all;T]
 
 % figure(1)
 % msz = 8;
@@ -216,3 +244,6 @@ end
 % set(gca,'ytick',[])
 % box on
 % hold off
+
+end
+writetable(T_all,path_to_write,'Sheet',1)

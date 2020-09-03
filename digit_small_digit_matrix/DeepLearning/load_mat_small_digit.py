@@ -16,7 +16,7 @@ posi_data_list = listdir(posi_data_dir)
 neg_data_dir = str('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative')
 neg_data_list = listdir(neg_data_dir)
 
-k = 2 #k times of training data
+k = 8 #k times of training data
 
 # generat training data
 x_train = np.zeros(shape=(20*k,112,112))
