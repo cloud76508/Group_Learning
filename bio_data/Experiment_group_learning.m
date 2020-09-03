@@ -121,4 +121,5 @@ for n = 1:size(rawData,1)/groupSize
         
 end
 
-
+fprintf('\nTP= %f\n',sum(tstResults(1:12,1)==1)/size(tstResults(1:12,1),1));
+fprintf('TN= %f\n',sum(tstResults(13:end,1)==-1)/size(tstResults(13:end,1),1));
