@@ -1,27 +1,26 @@
 clear all;
 close all;
 clc;
-sample_size = 40;
+sample_size = 25;
 [trainPositiveData, trainNegativeData, valPositiveData,...
-    valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(5, 40,sample_size, 500);
+    valNegativeData,testPositiveList, testNegativeList]  = loadData(sample_size,sample_size, sample_size, 500);
 
 
 trn.X = [trainNegativeData';trainPositiveData'];
 trn.y = [-ones(size(trainNegativeData,2),1);ones(size(trainPositiveData,2),1)];
-%trn.y = [randlabel(size(trainNegativeData,2));randlabel(size(trainPositiveData,2))];
 
 val.X = [valNegativeData'; valPositiveData'];
 val.y = [-ones(size(valNegativeData,2),1);ones(size(valPositiveData,2),1)];
-%val.y = [randlabel(size(valNegativeData,2));randlabel(size(valPositiveData,2))];
-
 
 % C parameter of SVM
 C = 10.^(-4:1:4);
 %C = 10.^(-1:1:1);
 
+% weight parameter of SVM
+weight = 1;
 
 for idx = 1:size(C, 2)
-    option_liblinear = [' -c ', num2str(C(idx)), ' -s 1 -q'];
+    option_liblinear = ['-w+1 ', num2str(weight), ' -w-1 1 -c ', num2str(C(idx)), ' -s 1 -q'];
     mdl = train(trn.y, sparse(trn.X), option_liblinear);
     
     %%% ----- do this -----
@@ -46,43 +45,36 @@ opt_C = C(opt_C_idx);
 % -------------------------------------------------------------
 % construct the training data
 
-option_liblinear = ['-c ', num2str(opt_C), ' -s 1 -q'];
+option_liblinear = ['-w+1 ', num2str(weight), ' -w-1 1 -c ', num2str(opt_C), ' -s 1 -q'];
 model = train(trn.y, sparse(trn.X), option_liblinear);
 
-fprintf('------------------------------------------------------------\n')
-fprintf('training results:\n')
-fprintf('True positive:\n')
 [~, ~, decPos] = predict(ones(size(trainPositiveData,2),1), sparse(trainPositiveData'), model);
-fprintf('True negative:\n')
 [~, ~, decNeg] = predict(-ones(size(trainNegativeData,2),1), sparse(trainNegativeData'), model);
-fprintf('------------------------------------------------------------\n')
 
-fprintf('------------------------------------------------------------\n')
-fprintf('validation results:\n')
-fprintf('True positive:\n')
 [~, ~, decValPos] = predict(ones(size(valPositiveData,2),1), sparse(valPositiveData'), model);
-fprintf('True negative:\n')
 [~, ~, decValNeg] = predict(-ones(size(valNegativeData,2),1), sparse(valNegativeData'), model);
-fprintf('------------------------------------------------------------\n')
 
 %--------------------------------------------------------------
 % apply model to the test data
 %--------------------------------------------------------------
 decValuesPosiTest = [];
 decValuesNegaTest = [];
+tempPosiTest =[];
+tempNageTest = [];
+for n =1:size(testPositiveList,1)
+    testPositiveData = load(testPositiveList{n}');
+    [~, ~, tempPosiTest] = predict(ones(size(testPositiveData.segment,2), 1), sparse(testPositiveData.segment'), model);
+    decValuesPosiTest = [decValuesPosiTest; tempPosiTest'];
+end
 
-fprintf('------------------------------------------------------------\n')
-fprintf('test results:\n')
-fprintf('True positive:\n')
-[~, ~, tempPosiTest] = predict(ones(size(testPositiveData,2), 1), sparse(testPositiveData'), model);
-%[~, ~, tempPosiTest] = predict(randlabel(size(testPositiveData,2)), sparse(testPositiveData'), model);
-decValuesPosiTest = [decValuesPosiTest; tempPosiTest'];
+for n =1:size(testNegativeList,1)
+    testNegativeData = load(testNegativeList{n}');
+    [~, ~, tempNegaTest] = predict(-ones(size(testNegativeData.segment,2), 1), sparse(testNegativeData.segment'), model);
+    decValuesNegaTest = [decValuesNegaTest; tempNegaTest'];
+end
 
-fprintf('True negative:\n')
-[~, ~, tempNegaTest] = predict(-ones(size(testNegativeData,2), 1), sparse(testNegativeData'), model);
-%[~, ~, tempNegaTest] = predict(randlabel(size(testNegativeData,2)), sparse(testNegativeData'), model);
-decValuesNegaTest = [decValuesNegaTest; tempNegaTest'];
-fprintf('------------------------------------------------------------\n')
+%saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative\\segment%d.mat',n);
+save('C:\\Users\\User\\Documents\\GitHub\\Group_Learning\\digit_small_digit_matrix\\Results\\A.mat')
 
 
 % %--------------------------------------------------------------

@@ -1,9 +1,10 @@
  clear all
  clc
 %load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
-%load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\test.mat')
+load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\A.mat')
+number_windows = 100;
 
-load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_R_W14_1.mat')
+%load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_R_W28_1.mat')
 
 method = 1;
 
