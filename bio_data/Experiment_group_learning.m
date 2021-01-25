@@ -4,7 +4,7 @@ clc;
 
 loadData
 
-[rawData,maxV,minV] = normalization(rawData);
+[rawData,maxV,minV] = normalization(rawData,1);
 
 for n =1:length(label)
    if label(n) ==0
@@ -17,7 +17,7 @@ originLabel = label;
 %cut some features for performing group learning
 rawData(:,9801:end) = [];
 
-groupSize = 25; 
+groupSize = 4; 
 
 groupData = [];
 for n =1:size(rawData,1)
@@ -113,7 +113,7 @@ for n = 1:size(rawData,1)/groupSize
         end
     else
         if mean(decTest) > min(meanPos)
-            tstResults = [tstResults;1]
+            tstResults = [tstResults
         else
             tstResults = [tstResults; -1]
         end

@@ -4,7 +4,7 @@ clc;
 
 loadData
 
-[rawData,maxV,minV] = normalization(rawData);
+[rawData,maxV,minV] = normalization(rawData,1);
 
 for n =1:length(label)
    if label(n) ==0

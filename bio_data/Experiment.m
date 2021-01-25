@@ -4,7 +4,7 @@ clc;
 
 loadData
 
-rawData = normalization(rawData);
+rawData = normalization(rawData,1);
 
 % data.X = rawData;
 % data.y = label;

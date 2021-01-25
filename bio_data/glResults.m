@@ -1,6 +1,6 @@
 clear all
 clc
-load GL_size_5
+load Results_groupsize_25
 
 tstResults = [];
 for exp = 1:12
