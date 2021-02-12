@@ -10,6 +10,7 @@ import scipy.io as sio
 from os import listdir
 import numpy as np
 
+
 posi_data_dir = str('C:\\Users\\User\\Desktop\\digit_segment\\positive')
 posi_data_list = listdir(posi_data_dir)
 

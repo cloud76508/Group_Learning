@@ -66,7 +66,8 @@ for n = 1:1000
     temp(r1(1):r1(1)+27,r2(1):r2(1)+27) = temp_window;
     segment = reshape(temp,[],1);
     
-    saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\positive\\segment%d.mat',n);
+    %saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\positive\\segment%d.mat',n);
+    saveSeg = sprintf('C:\\Users\\ASUS\\Desktop\\digit\\positive\\segment%d.mat',n);
     save(saveSeg,'segment')
 end
 
@@ -97,7 +98,8 @@ for n = 1:1000
     temp(r1(1):r1(1)+27,r2(1):r2(1)+27) = temp_window;
     segment = reshape(temp,[],1);
     
-    saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative\\segment%d.mat',n);
+    %saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative\\segment%d.mat',n);
+    saveSeg = sprintf('C:\\Users\\ASUS\\Desktop\\digit\\negative\\segment%d.mat',n);
     save(saveSeg,'segment')
 end
 

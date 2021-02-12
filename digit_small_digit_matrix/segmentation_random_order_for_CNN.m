@@ -74,7 +74,8 @@ for n = 1:1000
     end
     segment = segment_raw;
     
-    saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\positive\\segment%d.mat',n);
+    %saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\positive\\segment%d.mat',n);
+    saveSeg = sprintf('C:\\Users\\ASUS\\Desktop\\digit\\positive\\segment%d.mat',n);
     save(saveSeg,'segment')
 end
 
@@ -124,7 +125,8 @@ for n = 1:1000
     end
     segment = segment_raw;
     
-    saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative\\segment%d.mat',n);
+    %saveSeg = sprintf('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative\\segment%d.mat',n);
+    saveSeg = sprintf('C:\\Users\\ASUS\\Desktop\\digit\\negative\\segment%d.mat',n);
     save(saveSeg,'segment')
 end
 

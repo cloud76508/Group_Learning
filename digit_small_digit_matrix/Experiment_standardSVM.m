@@ -1,9 +1,9 @@
 clear all;
 close all;
 clc;
-sample_size = 40;
+sample_size = 10;
 [trainPositiveData, trainNegativeData, valPositiveData,...
-    valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(5, 40,sample_size, 500);
+    valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(10, 10,sample_size, 500);
 
 
 trn.X = [trainNegativeData';trainPositiveData'];

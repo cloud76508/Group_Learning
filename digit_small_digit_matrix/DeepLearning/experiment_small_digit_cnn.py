@@ -7,7 +7,7 @@ Created on Mon Jan 13 14:57:04 2020
 
 import tensorflow as tf
 
-from tensorflow.keras.layers import Dense, Flatten, Conv2D
+from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPool2D
 from tensorflow.keras import Model
 
 from load_mat_small_digit import x_train, y_train, x_test, y_test
@@ -32,14 +32,16 @@ test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(4)
 class MyModel(Model):
   def __init__(self):
     super(MyModel, self).__init__()
-    #self.conv1 = Conv2D(32, 3, activation='relu') # used in the tutorials
-    self.conv1 = Conv2D(32, 5, (5,5), activation='relu') # for test
+    self.conv1 = Conv2D(32, 3, activation='relu') # used in the tutorials
+    #self.conv1 = Conv2D(32, 5, (5,5), activation='relu') # for test
+    #self.pooling = MaxPool2D() # for test
     self.flatten = Flatten()
     self.d1 = Dense(128, activation='relu')
     self.d2 = Dense(2)
     
   def call(self, x):
     x = self.conv1(x)
+    #x = self.pooling(x) # for test
     x = self.flatten(x)
     x = self.d1(x)
     return self.d2(x)
@@ -102,9 +104,16 @@ for epoch in range(EPOCHS):
                         train_accuracy.result() * 100,
                         test_loss.result(),
                         test_accuracy.result() * 100))
+
+y_pre_train = model(x_train).numpy() 
+ss_train = sum(y_pre_train[0:int(y_pre_train.shape[0]/2),0]<y_pre_train[0:int(y_pre_train.shape[0]/2),1])/int(y_pre_train.shape[0]/2)
+sp_train = sum(y_pre_train[int(y_pre_train.shape[0]/2):y_pre_train.shape[0],0]>y_pre_train[int(y_pre_train.shape[0]/2):y_pre_train.shape[0],1])/int(y_pre_train.shape[0]/2)
+print(ss_train)
+print(sp_train)
+
   
 y_pre = model(x_test).numpy()
 ss = sum(y_pre[:500,0]<y_pre[0:500,1])/500
-sp = sum(y_pre[501:1000,0]>y_pre[501:1000,1])/500
+sp = sum(y_pre[500:1000,0]>y_pre[500:1000,1])/500
 print(ss)
 print(sp)

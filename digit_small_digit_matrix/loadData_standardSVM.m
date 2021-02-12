@@ -1,9 +1,11 @@
 function [trainPositiveData, trainNegativeData, valPositiveData, valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(train_pos, train_neg, val_size, test_size)
 
-positiveFeaturesDir = 'C:\Users\User\Desktop\digit_segment\small_matrix\positive\';
+%positiveFeaturesDir = 'C:\Users\User\Desktop\digit_segment\small_matrix\positive\';
+positiveFeaturesDir = 'C:\Users\ASUS\Desktop\digit\positive\';
 positiveList = dir(fullfile([positiveFeaturesDir '*.mat']));
 
-negativeFeaturesDir = 'C:\Users\User\Desktop\digit_segment\small_matrix\negative\';
+%negativeFeaturesDir = 'C:\Users\User\Desktop\digit_segment\small_matrix\negative\';.
+negativeFeaturesDir = 'C:\Users\ASUS\Desktop\digit\negative\';
 negtiveList = dir(fullfile([negativeFeaturesDir '*.mat']));
 
 
