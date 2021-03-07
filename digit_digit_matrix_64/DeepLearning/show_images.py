@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from load_mat_small_digit import x_train, y_train, x_test, y_test
 
 # pick a sample to plot
-sample = 9
+sample = 15
 image = x_train[sample]
 # plot the sample
 #fig = plt.figure
