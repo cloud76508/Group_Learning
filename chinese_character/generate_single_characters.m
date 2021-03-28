@@ -12,6 +12,7 @@ for n = 1:40
     for m = 1:50
         character = [];
         character = data((n-1)*63+1:n*63, (m-1)*64+1:m*64);
+        character(64,:) = 0; % add a zeros row
         temp_name = sprintf('D:\\Handwritten_chinese\\ETL\\single_characters\\cn\\chr%d.mat',character_numb);
         save(temp_name,'character')
         character_numb = character_numb +1;

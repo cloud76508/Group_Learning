@@ -1,63 +1,66 @@
-function [trainPositiveData, trainNegativeData, valPositiveData, valNegativeData,testPositiveList, testNegativeList]  = loadData(train_Pos,train_Neg, val_size, test_size)
+function [trainPositiveData, trainNegativeData, valPositiveData, valNegativeData,testPositiveList, testNegativeList]  = loadData(train_pos,train_neg, val_size, test_size)
 
 %positiveFeaturesDir = 'C:\Users\User\Desktop\digit_segment\small_matrix\positive\';
-positiveFeaturesDir = 'C:\Users\ASUS\Desktop\digit\positive\';
+positiveFeaturesDir = 'D:\Handwritten_chinese\ETL\single_characters\cn\';
 positiveList = dir(fullfile([positiveFeaturesDir '*.mat']));
+positiveList = positiveList(randperm(size(positiveList,1)),:);
 
-%negativeFeaturesDir = 'C:\Users\User\Desktop\digit_segment\small_matrix\negative\';
-negativeFeaturesDir = 'C:\Users\ASUS\Desktop\digit\negative\';
+%negativeFeaturesDir = 'C:\Users\User\Desktop\digit_segment\small_matrix\negative\';.
+negativeFeaturesDir = 'D:\Handwritten_chinese\ETL\single_characters\jp\';
 negtiveList = dir(fullfile([negativeFeaturesDir '*.mat']));
-
+negtiveList = negtiveList(randperm(size(negtiveList,1)),:);
 
 %load training data
 trainPositiveData = [];
-random_positive = randperm(200);
-for n =1:train_Pos
+random_positive = randperm(2000);
+for n =1:train_pos
     temp = [];
     %temp = load([positiveFeaturesDir positiveList(n).name]);
     temp = load([positiveFeaturesDir positiveList(random_positive(n)).name]);
-    trainPositiveData = [trainPositiveData, temp.segment];
+    trainPositiveData = [trainPositiveData, temp.character];
 end
 
 trainNegativeData = [];
-random_negative = randperm(200);
-for n =1:train_Neg
+random_negative = randperm(2000);
+for n =1:train_neg
     temp = [];
     %temp = load([negativeFeaturesDir negtiveList(n).name]);
     temp = load([negativeFeaturesDir negtiveList(random_negative(n)).name]);
-    trainNegativeData = [trainNegativeData, temp.segment];
+    trainNegativeData = [trainNegativeData, temp.character];
 end
 
 %load validation data
 valPositiveData = [];
-random_positive_val = randperm(200)+200;
+random_positive_val = randperm(2000)+2000;
 for n =1:val_size
     temp = [];
     %temp = load([positiveFeaturesDir positiveList(n+200).name]);
     temp = load([positiveFeaturesDir positiveList(random_positive_val(n)).name]);
-    valPositiveData = [valPositiveData, temp.segment];
+    valPositiveData = [valPositiveData, temp.character];
 end
 
 valNegativeData = [];
-random_negative_val = randperm(200)+200;
+random_negative_val = randperm(2000)+2000;
 for n =1:val_size
     temp = [];
     %temp = load([negativeFeaturesDir negtiveList(n+200).name]);
     temp = load([negativeFeaturesDir negtiveList(random_negative_val(n)).name]);
-    valNegativeData = [valNegativeData, temp.segment];
+    valNegativeData = [valNegativeData, temp.character];
 end
+
  
 i = 1;
-for n =501:500+test_size
+for n =5001:5000+test_size
     testPositiveList{i,1} = [positiveFeaturesDir positiveList(n).name];
     i=i+1;
 end
 
 i = 1;
-for n =501:500+test_size
+for n =5001:5000+test_size
     testNegativeList{i,1} = [negativeFeaturesDir negtiveList(n).name];
     i=i+1;
 end
+
 
 
 

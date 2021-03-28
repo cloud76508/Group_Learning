@@ -3,7 +3,7 @@ close all;
 clc;
 sample_size = 5;
 [trainPositiveData, trainNegativeData, valPositiveData,...
-    valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(sample_size, sample_size,sample_size, 500);
+    valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(sample_size, sample_size,sample_size*2, 500);
 
 
 trn.X = [trainNegativeData';trainPositiveData'];
@@ -26,7 +26,8 @@ val.y = [-ones(size(valNegativeData,2),1);ones(size(valPositiveData,2),1)];
 
 
 % C parameter of SVM
-C = 10.^(-4:1:4);
+%C = 10.^(-4:1:4);
+C = 2.^(-4:1:4);
 
 crossValAccuracy =[];
 weight = 1;
