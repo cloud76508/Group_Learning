@@ -42,8 +42,8 @@ end
 
 %creat negative segments 
 for n = 1:1000
-    tempRandom = randperm(size(Image8,2));
-    tempImages = Image8(:, tempRandom(1));
+    tempRandom = randperm(size(Image3,2));
+    tempImages = Image3(:, tempRandom(1));
     segment = tempImages;
     segment = reshape(segment,[28,28]);
     

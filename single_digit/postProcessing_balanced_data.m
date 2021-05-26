@@ -3,7 +3,7 @@
 %load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
 % load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\A.mat')
 %load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_R_W10_1.mat')
-load('C:\Users\ASUS\Documents\GitHub\Group_Learning\single_digit\Results\SVM_GL_W27_v1.mat')
+load('C:\Users\ASUS\Documents\GitHub\Group_Learning\single_digit\Results\SVM_GL_W25_v1.mat')
 number_windows = size(decValuesPosiTest,2);
 
 method = 1;
@@ -55,19 +55,24 @@ if method == 1 %mean
     [~,tempIndex] =  max(valACC);
     [~,indexM] =  max(max(valACC));
     indexN = tempIndex(indexM);
-   
-    thr1 = (quantile(mean(decValNeg),qunNeg(indexN)) + quantile(mean(decValPos),qunPos(indexM)))/2;
+    
+    %method1
+    %thr1 = (quantile(mean(decValNeg),qunNeg(indexN)) + quantile(mean(decValPos),qunPos(indexM)))/2;
+    %method2
+    thr1 = (quantile(mean(decValNeg),0.5) + quantile(mean(decValPos),0.5))/2;
+    %method3 
+    %thr1 = (quantile(mean(decValNeg),0) + quantile(mean(decValPos),1))/2;
     
     
-    sprintf('SS_training = %d', sum(mean(decPos) > thr1)/size(decPos,2)*100)
-    sprintf('SP_training = %d', sum(mean(decNeg) <= thr1)/size(decNeg,2)*100)
+    %sprintf('SS_training = %d', sum(mean(decPos) > thr1)/size(decPos,2)*100)
+    %sprintf('SP_training = %d', sum(mean(decNeg) <= thr1)/size(decNeg,2)*100)
     
-    sprintf('SS = %d', sum(mean(decValuesPosiTest) > thr1)/size(decValuesPosiTest,2)*100)
-    sprintf('SP = %d', sum(mean(decValuesNegaTest) <= thr1)/size(decValuesNegaTest,2)*100)
+    %sprintf('SS = %d', sum(mean(decValuesPosiTest) > thr1)/size(decValuesPosiTest,2)*100)
+    %sprintf('SP = %d', sum(mean(decValuesNegaTest) <= thr1)/size(decValuesNegaTest,2)*100)
 end
 
-training_acc = (sum(mean(decPos) > thr1) + sum(mean(decNeg) <= thr1))/10
-test_acc = (sum(mean(decValuesPosiTest) > thr1) + sum(mean(decValuesNegaTest) <= thr1))/1000
+training_error = 1- (sum(mean(decPos) > thr1) + sum(mean(decNeg) <= thr1))/10
+test_error = 1- (sum(mean(decValuesPosiTest) > thr1) + sum(mean(decValuesNegaTest) <= thr1))/1000
 % figure(1)
 % msz = 8;
 % ColorRGB = [1 0 0];

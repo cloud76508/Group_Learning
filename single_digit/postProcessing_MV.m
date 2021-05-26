@@ -1,79 +1,58 @@
-% clear all
-% clc
+ clear all
+ clc
 % %load('C:\Users\User\Desktop\IJCNN\digit\Results\IJCNN_balanced\Results_feature.mat')
 % load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_5.mat')
 % %load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\Group_5_75p.mat')
 % %load('C:\Users\User\Documents\GitHub\Group_Learning\digit_small_digit_matrix\Results\test.mat')
 %window_size_list = [10,14,15,20,23,24,25,26,27,28];
-load('C:\Users\ASUS\Documents\GitHub\Group_Learning\single_digit\Results\SVM_GL_W10.mat')
+load('C:\Users\ASUS\Documents\GitHub\Group_Learning\single_digit\Results\SVM_GL_W25_v1.mat')
 
-decNeg = reshape(decNeg,5,[]);
-decPos = reshape(decPos,5,[]);
+number_windows = size(decValuesPosiTest,2);
+decNeg = reshape(decNeg,number_windows,[]);
+decPos = reshape(decPos,number_windows,[]);
 decValuesIntTest = decValuesNegaTest';
 decValuesPreTest = decValuesPosiTest';
 
-% %mtehod 1
-% thr1 = 1;
-% TP = 0;
-% for n = 1:size(decValuesPreTest,2)
-%     if sum(decValuesPreTest(:,n) > 0) >= thr1
-%        TP = TP +1;
-%     end
-% end
-% 
-% TN = 0;
-% for n = 1:size(decValuesIntTest,2)
-%     if sum(decValuesIntTest(:,n)>0) < thr1
-%        TN = TN +1;
-%     end
-% end
-
 %mtehod 2 Majority vote
-TP = 0;
+FN = 0;
 for n = 1:size(decValuesPreTest,2)
     positiveVote = sum(decValuesPreTest(:,n) > 0);
     negativeVote = sum(decValuesPreTest(:,n) < 0);    
-    if positiveVote > negativeVote
-       TP = TP +1;
+    if negativeVote >  positiveVote
+       FN = FN +1;
     end
 end
 
-TN = 0;
+FP = 0;
 for n = 1:size(decValuesIntTest,2)
     positiveVote = sum(decValuesIntTest(:,n) > 0);
     negativeVote = sum(decValuesIntTest(:,n) < 0);    
-    if negativeVote > positiveVote
-       TN = TN +1;
+    if positiveVote > negativeVote
+       FP = FP +1;
     end
 end
 
-fprintf('FN = %.3f\n', 1-TP/size(decValuesPreTest,2))
-fprintf('FP = %.3f\n', 1-TN/size(decValuesIntTest,2))
-fprintf('Test_Acc = %.3f\n', (TP+TN)/(size(decValuesPreTest,2)+size(decValuesIntTest,2)))
-
 %mtehod 2 Majority vote
-TP_train = 0;
+FN_train = 0;
 for n = 1:size(decPos,2)
     positiveVote = sum(decPos(:,n) > 0);
     negativeVote = sum(decPos(:,n) < 0);    
-    if positiveVote > negativeVote
-       TP_train = TP_train +1;
+    if negativeVote > positiveVote
+       FN_train = FN_train +1;
     end
 end
 
-TN_train = 0;
+FP_train = 0;
 for n = 1:size(decNeg,2)
     positiveVote = sum(decNeg(:,n) > 0);
     negativeVote = sum(decNeg(:,n) < 0);    
-    if negativeVote > positiveVote
-       TN_train = TN_train +1;
+    if positiveVote > negativeVote
+       FP_train = FP_train +1;
     end
 end
 
-fprintf('FN_train = %.3f\n', 1-TP_train/size(decPos,2))
-fprintf('FP_train = %.3f\n', 1-TN_train/size(decPos,2))
-fprintf('Train_Acc = %.3f\n', (TP_train+TN_train)/(size(decPos,2)+size(decPos,2)))
-
+fprintf('Train_error = %.3f\n', (FN_train+FP_train)/(size(decPos,2)+size(decPos,2)))
+fprintf('Test_error = %.3f\n', (FP+FN)/(size(decValuesPreTest,2)+size(decValuesIntTest,2)))
 
 % figure(1)
 % msz = 8;

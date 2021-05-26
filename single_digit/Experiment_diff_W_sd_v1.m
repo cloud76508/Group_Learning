@@ -2,7 +2,7 @@ clear all;
 clc;
 
 %window_size_list = [20,23,24,25,26,27];
-window_size_list = [10,14,15,20,23,24,25,26,27];
+window_size_list = [10,15,20,25];
 
 for w = 1:length(window_size_list)
     clearvars -except window_size_list w
@@ -146,5 +146,4 @@ for w = 1:length(window_size_list)
     fileName = sprintf('SVM_GL_W%d_v1.mat',window_size_list(w));
     path_to_save = [pathToResults fileName];
     save(path_to_save)
-    
 end

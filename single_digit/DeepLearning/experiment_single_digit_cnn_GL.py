@@ -34,8 +34,8 @@ def cnn_GL_experiment(gs):
     #x_train, x_test = x_train / 255.0, x_test / 255.0
     
     #gs = 20 # group size
-    n_pos = 5
-    n_neg = 5
+    n_pos = 15
+    n_neg = 15
     n_pos_tst = 500
     n_neg_tst = 500
     def GoupData(x_train, gs, n_pos, n_neg):
@@ -72,14 +72,14 @@ def cnn_GL_experiment(gs):
         super(MyModel, self).__init__()
         self.conv1 = Conv2D(32, 3, activation='relu') # used in the tutorials
         #self.conv1 = Conv2D(32, 5, (5,5), activation='relu') # for test
-        self.pooling = MaxPool2D() # for test
+        #self.pooling = MaxPool2D() # for test
         self.flatten = Flatten()
         self.d1 = Dense(128, activation='relu')
         self.d2 = Dense(2)
         
       def call(self, x):
         x = self.conv1(x)
-        x = self.pooling(x) # for test
+        #x = self.pooling(x) # for test
         x = self.flatten(x)
         x = self.d1(x)
         return self.d2(x)
@@ -157,7 +157,8 @@ def cnn_GL_experiment(gs):
         mean_train[n,0] = np.mean(output_train[n*gn:(n+1)*gn])
     
     #threshold = (np.mean(mean_train[0:n_pos]) + np.mean(mean_train[n_pos:n_pos+n_neg]))/2
-    threshold = (np.min(mean_train[0:n_pos]) + np.max(mean_train[n_pos:n_pos+n_neg]))/2
+    #threshold = (np.min(mean_train[0:n_pos]) + np.max(mean_train[n_pos:n_pos+n_neg]))/2
+    threshold = (np.median(mean_train[0:n_pos]) + np.median(mean_train[n_pos:n_pos+n_neg]))/2
     
     ss_train = sum(mean_train[0:n_pos,0]>threshold)/n_pos
     sp_train = sum(mean_train[n_pos:n_pos+n_neg,0]<threshold)/n_neg
