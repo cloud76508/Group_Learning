@@ -20,7 +20,7 @@ neg_data_dir = str('C:\\Users\\ASUS\\Desktop\\digit\\negative')
 neg_data_list = listdir(neg_data_dir)
 randNum2 = np.random.permutation(len(neg_data_list))
 
-k = 3 #k times of training data
+k = 1 #k times of training data
 
 # generat training data
 x_train = np.zeros(shape=(10*k,28,28))

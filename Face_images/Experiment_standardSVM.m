@@ -1,9 +1,9 @@
 clear all;
 close all;
 clc;
-sample_size = 15;
+sample_size = 10;
 [trainPositiveData, trainNegativeData, valPositiveData,...
-    valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(sample_size, sample_size,sample_size, 500);
+    valNegativeData, testPositiveData, testNegativeData] = loadData_standardSVM(sample_size, sample_size,sample_size, 24);
 
 
 trn.X = [trainNegativeData';trainPositiveData'];
@@ -118,7 +118,7 @@ fprintf('True negative:\n')
 decValuesNegaTest = [decValuesNegaTest; tempNegaTest'];
 fprintf('------------------------------------------------------------\n')
 
-1-(sum(tempPosiTest>0) + sum(tempNegaTest<0))/1000
+1-(sum(tempPosiTest>0) + sum(tempNegaTest<0))/88
 
 % %--------------------------------------------------------------
 % % save results

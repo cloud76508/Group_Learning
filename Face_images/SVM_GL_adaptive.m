@@ -1,7 +1,7 @@
 function [training_error, test_error]  = SVM_GL_adaptive(w)
     clearvars -except window_size_list w
-    sample_size = 15; %number of valdiation data in each classes
-    test_size = 500;
+    sample_size = 10; %number of valdiation data in each classes
+    test_size = 24;
     window_size = w;
     
     [trainPositiveData, trainNegativeData, valPositiveData,...
@@ -9,7 +9,7 @@ function [training_error, test_error]  = SVM_GL_adaptive(w)
     %segmentation in the same way as CNN (i.e., segmentation_for_CNN)
     %display_network(reshape(segment,[],1))
     
-    size_seg = size(trainPositiveData,1);
+    size_seg = 160;
     
     train_pos = [];
     train_neg = [];
@@ -90,8 +90,10 @@ function [training_error, test_error]  = SVM_GL_adaptive(w)
     tempPosiTest =[];
     tempNageTest = [];
     for n =1:size(testPositiveList,1)
-        temp_data = load(testPositiveList{n});
-        [number_windows,testPositiveData] = partition_grid(temp_data.segment,window_size);
+        temp_data = imread(testPositiveList{n});
+        temp_data = temp_data(1:160,1:160);
+        temp_data = im2double(temp_data);
+        [number_windows,testPositiveData] = partition_grid(temp_data,window_size);
         
         %[~, ~, tempPosiTest] = predict(ones(size(testPositiveData,2),1), sparse(testPositiveData'), model);
         [~, ~, tempPosiTest] = svmpredict(ones(size(testPositiveData,2),1), testPositiveData', model);
@@ -99,8 +101,10 @@ function [training_error, test_error]  = SVM_GL_adaptive(w)
     end
     
     for n =1:size(testNegativeList,1)
-        temp_data = load(testNegativeList{n}');
-        [~,testNegativeData] = partition_grid(temp_data.segment,window_size);
+        temp_data = imread(testNegativeList{n});
+        temp_data = temp_data(1:160,1:160);
+        temp_data = im2double(temp_data);
+        [~,testNegativeData] = partition_grid(temp_data,window_size);
         
         %[~, ~, tempNegaTest] = predict(-ones(size(testNegativeData,2),1), sparse(testNegativeData'), model);
         [~, ~, tempNegaTest] = svmpredict(-ones(size(testNegativeData,2),1), testNegativeData', model);

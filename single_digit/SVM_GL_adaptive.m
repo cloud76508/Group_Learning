@@ -99,7 +99,7 @@ function [training_error, test_error]  = SVM_GL_adaptive(w)
     end
     
     for n =1:size(testNegativeList,1)
-        temp_data = load(testNegativeList{n}');
+        temp_data = load(testNegativeList{n});
         [~,testNegativeData] = partition_grid(temp_data.segment,window_size);
         
         %[~, ~, tempNegaTest] = predict(-ones(size(testNegativeData,2),1), sparse(testNegativeData'), model);

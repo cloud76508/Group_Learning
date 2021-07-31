@@ -93,11 +93,11 @@ def cnn_experiment():
         test_loss.reset_states()
         test_accuracy.reset_states()
 
-    for images, labels in train_ds:
-        train_step(images, labels)
+        for images, labels in train_ds:
+            train_step(images, labels)
 
-    for test_images, test_labels in test_ds:
-        test_step(test_images, test_labels)
+        for test_images, test_labels in test_ds:
+            test_step(test_images, test_labels)
 
         template = 'Epoch {}, Loss: {}, Accuracy: {}, Test Loss: {}, Test Accuracy: {}'
         print(template.format(epoch + 1,

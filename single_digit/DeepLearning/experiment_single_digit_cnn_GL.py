@@ -34,8 +34,8 @@ def cnn_GL_experiment(gs):
     #x_train, x_test = x_train / 255.0, x_test / 255.0
     
     #gs = 20 # group size
-    n_pos = 15
-    n_neg = 15
+    n_pos = 5
+    n_neg = 5
     n_pos_tst = 500
     n_neg_tst = 500
     def GoupData(x_train, gs, n_pos, n_neg):

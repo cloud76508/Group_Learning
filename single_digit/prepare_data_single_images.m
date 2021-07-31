@@ -9,8 +9,11 @@ digit_labels = loadMNISTLabels('emnist-digits-train-labels-idx1-ubyte');
 letters = loadMNISTImages('emnist-letters-train-images-idx3-ubyte');
 letters_labels = loadMNISTLabels('emnist-letters-train-labels-idx1-ubyte');
 
-Image1 = letters(:,letters_labels== 10 | letters_labels==18);
-Image2 = digits(:,digit_labels== 5 | digit_labels==7);
+%Image1 = letters(:,letters_labels== 10 | letters_labels==18);
+%Image2 = digits(:,digit_labels== 5 | digit_labels==7);
+
+Image1 = letters(:,letters_labels== 25);
+Image2 = letters(:,letters_labels== 26);
 
 %Image1 = digits;
 %Image2 = letters;
