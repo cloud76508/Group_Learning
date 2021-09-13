@@ -76,7 +76,7 @@ opt_C = C(opt_C_idx);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %libsvm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-option_liblinear = ['-c ', num2str(C(idx)), ' -s 0'];
+option_liblinear = ['-c ', num2str(opt_C), ' -s 0'];
 model = svmtrain(trn.y, trn.X, option_liblinear);
 
 fprintf('------------------------------------------------------------\n')
@@ -86,7 +86,7 @@ fprintf('True positive:\n')
 [~, ~, decPos] = svmpredict(ones(size(trainPositiveData,2),1), trainPositiveData', model);
 fprintf('True negative:\n')
 %[~, ~, decNeg] = predict(-ones(size(trainNegativeData,2),1), sparse(trainNegativeData'), model);
-[~, ~, decPos] = svmpredict(ones(size(trainPositiveData,2),1), trainPositiveData', model);
+[~, ~, decNeg] = svmpredict(-ones(size(trainNegativeData,2),1), trainNegativeData', model);
 fprintf('------------------------------------------------------------\n')
 
 fprintf('------------------------------------------------------------\n')

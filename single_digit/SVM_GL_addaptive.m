@@ -78,7 +78,7 @@ for w = 1:length(window_size_list)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %libsvm
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    option_liblinear = ['-c ', num2str(C(idx)), ' -s 0'];
+    option_liblinear = ['-c ', num2str(opt_C), ' -s 0'];
     model = svmtrain(trn.y, trn.X, option_liblinear);
     
     [~, ~, decPos] = svmpredict(ones(size(trainPositiveData,2),1), trainPositiveData', model);

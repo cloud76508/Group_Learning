@@ -75,7 +75,7 @@ opt_C = C(opt_C_idx);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %libsvm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-option_liblinear = ['-c ', num2str(C(idx)), ' -s 0'];
+option_liblinear = ['-c ', num2str(opt_C), ' -s 0'];
 model = svmtrain(trn.y, trn.X, option_liblinear);
 
 fprintf('------------------------------------------------------------\n')

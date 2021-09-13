@@ -1,9 +1,9 @@
 function [trainPositiveData, trainNegativeData, valPositiveData, valNegativeData,testPositiveList, testNegativeList]  = loadData(train_Pos,train_Neg, val_size, test_size)
 
-positiveFeaturesDir = 'D:\CroppedYale\yaleB33\';
+positiveFeaturesDir = 'D:\CroppedYale\yaleB07\';
 positiveList = dir(fullfile([positiveFeaturesDir '*.pgm']));
 
-negativeFeaturesDir = 'D:\CroppedYale\yaleB27\';
+negativeFeaturesDir = 'D:\CroppedYale\yaleB19\';
 negtiveList = dir(fullfile([negativeFeaturesDir '*.pgm']));
 
 %load training data

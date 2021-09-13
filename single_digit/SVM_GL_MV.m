@@ -1,7 +1,7 @@
 function [training_error, test_error]  = SVM_GL_MV(w)
     clearvars -except window_size_list w
-    sample_size = 15; %number of valdiation data in each classes
-    test_size = 500;
+    sample_size = 10; %number of valdiation data in each classes
+    test_size = 100;
     window_size = w;
 
     [trainPositiveData, trainNegativeData, valPositiveData,...
@@ -73,7 +73,7 @@ function [training_error, test_error]  = SVM_GL_MV(w)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %libsvm
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    option_liblinear = ['-c ', num2str(C(idx)), ' -s 0'];
+    option_liblinear = ['-c ', num2str(opt_C), ' -s 0'];
     model = svmtrain(trn.y, trn.X, option_liblinear);
 
     [~, ~, decPos] = svmpredict(ones(size(trainPositiveData,2),1), trainPositiveData', model);

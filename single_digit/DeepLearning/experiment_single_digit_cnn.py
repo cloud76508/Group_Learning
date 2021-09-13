@@ -9,11 +9,11 @@ if __name__ == '__main__':
     # do something
     cnn_experiment()
 
-def cnn_experiment():
+def cnn_experiment(x_train, y_train, x_test, y_test):
     import tensorflow as tf
     from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPool2D
     from tensorflow.keras import Model
-    from load_mat_single_digit import x_train, y_train, x_test, y_test
+    #from load_mat_single_digit import x_train, y_train, x_test, y_test
 
 
 
@@ -114,7 +114,7 @@ def cnn_experiment():
 
   
     y_pre = model(x_test).numpy()
-    ss = sum(y_pre[:500,0]<y_pre[0:500,1])/500
-    sp = sum(y_pre[500:1000,0]>y_pre[500:1000,1])/500
+    ss = sum(y_pre[:100,0]<y_pre[0:100,1])/100
+    sp = sum(y_pre[100:200,0]>y_pre[100:200,1])/100
     error = 1-(ss+sp)/2
     return(train_error, error)

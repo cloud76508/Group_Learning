@@ -76,7 +76,7 @@ clc
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %libsvm
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    option_liblinear = ['-c ', num2str(C(idx)), ' -s 0'];
+    option_liblinear = ['-c ', num2str(opt_C), ' -s 0'];
     model = svmtrain(trn.y, trn.X, option_liblinear);
     
     [~, ~, decPos] = svmpredict(ones(size(trainPositiveData,2),1), trainPositiveData', model);
