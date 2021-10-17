@@ -2,57 +2,74 @@
 """
 Created on Wed Jun  3 14:16:20 2020
 
-@author: User
+@author: HHC
 """
 
-from os.path import dirname, join as pjoin
-import scipy.io as sio
-from os import listdir
-import numpy as np
-
-#posi_data_dir = str('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\positive')
-posi_data_dir = str('C:\\Users\\ASUS\\Desktop\\digit\\positive')
-posi_data_list = listdir(posi_data_dir)
-randNum1 = np.random.permutation(len(posi_data_list))
-
-#neg_data_dir = str('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative')
-neg_data_dir = str('C:\\Users\\ASUS\\Desktop\\digit\\negative')
-neg_data_list = listdir(neg_data_dir)
-randNum2 = np.random.permutation(len(neg_data_list))
-
-k = 3 #k times of training data
-
-# generat training data
-x_train = np.zeros(shape=(10*k,28,28))
-for n in range(5*k): 
-    mat_fname = pjoin(posi_data_dir, posi_data_list[randNum1[n]]) 
-    mat_contents = sio.loadmat(mat_fname)
-    temp = mat_contents['segment']
-    x_train[n] = temp
-for n in range(5*k):
-    mat_fname = pjoin(neg_data_dir, neg_data_list[randNum2[n]]) 
-    mat_contents = sio.loadmat(mat_fname)
-    temp = mat_contents['segment']
-    x_train[n+5*k] = temp
-
-y_train = np.zeros(shape=(10*k,1))
-for n in range(5*k):
-    y_train[n] = 1
-
-# generate test data    
-x_test = np.zeros(shape=(1000,28,28))
-for n in range(500): 
-    mat_fname = pjoin(posi_data_dir, posi_data_list[randNum1[n+500]]) 
-    mat_contents = sio.loadmat(mat_fname)
-    temp = mat_contents['segment']
-    x_test[n] = temp
-for n in range(500):
-    mat_fname = pjoin(neg_data_dir, neg_data_list[randNum2[n+500]]) 
-    mat_contents = sio.loadmat(mat_fname)
-    temp = mat_contents['segment']
-    x_test[n+500] = temp
-
-y_test = np.zeros(shape=(1000,1))
-for n in range(500):
-    y_test[n] = 1
-
+def load_data(k):
+    from os.path import dirname, join as pjoin
+    import scipy.io as sio
+    from os import listdir
+    import numpy as np
+    #posi_data_dir = str('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\positive')
+    posi_data_dir = str('C:\\Users\\ASUS\\Desktop\\digit\\positive')
+    posi_data_list = listdir(posi_data_dir)
+    randNum1 = np.random.permutation(len(posi_data_list))
+    
+    #neg_data_dir = str('C:\\Users\\User\\Desktop\\digit_segment\\small_matrix\\negative')
+    neg_data_dir = str('C:\\Users\\ASUS\\Desktop\\digit\\negative')
+    neg_data_list = listdir(neg_data_dir)
+    randNum2 = np.random.permutation(len(neg_data_list))
+    
+    #k = 2 #k times of training data
+    
+    # generat training data
+    x_train = np.zeros(shape=(10*k,28,28))
+    for n in range(5*k): 
+        mat_fname = pjoin(posi_data_dir, posi_data_list[randNum1[n]]) 
+        mat_contents = sio.loadmat(mat_fname)
+        temp = mat_contents['segment']
+        x_train[n] = temp
+    for n in range(5*k):
+        mat_fname = pjoin(neg_data_dir, neg_data_list[randNum2[n]]) 
+        mat_contents = sio.loadmat(mat_fname)
+        temp = mat_contents['segment']
+        x_train[n+5*k] = temp
+    
+    y_train = np.zeros(shape=(10*k,1))
+    for n in range(5*k):
+        y_train[n] = 1
+    
+    x_val = np.zeros(shape=(10*k,28,28))
+    for n in range(5*k): 
+        mat_fname = pjoin(posi_data_dir, posi_data_list[randNum1[n+100]]) 
+        mat_contents = sio.loadmat(mat_fname)
+        temp = mat_contents['segment']
+        x_val[n] = temp
+    for n in range(5*k):
+        mat_fname = pjoin(neg_data_dir, neg_data_list[randNum2[n+100]]) 
+        mat_contents = sio.loadmat(mat_fname)
+        temp = mat_contents['segment']
+        x_val[n+5*k] = temp
+    
+    y_val = np.zeros(shape=(10*k,1))
+    for n in range(5*k):
+        y_val[n] = 1
+    
+    # generate test data    
+    x_test = np.zeros(shape=(200,28,28))
+    for n in range(100): 
+        mat_fname = pjoin(posi_data_dir, posi_data_list[randNum1[n+500]]) 
+        mat_contents = sio.loadmat(mat_fname)
+        temp = mat_contents['segment']
+        x_test[n] = temp
+    for n in range(100):
+        mat_fname = pjoin(neg_data_dir, neg_data_list[randNum2[n+500]]) 
+        mat_contents = sio.loadmat(mat_fname)
+        temp = mat_contents['segment']
+        x_test[n+100] = temp
+    
+    y_test = np.zeros(shape=(200,1))
+    for n in range(100):
+        y_test[n] = 1
+        
+    return(x_train, y_train, x_val, y_val, x_test, y_test)

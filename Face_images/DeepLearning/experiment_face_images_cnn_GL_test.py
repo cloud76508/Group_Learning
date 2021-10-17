@@ -9,7 +9,11 @@ Created on Mon Jan 13 14:57:04 2020
 #if __name__ == '__main__':
 # test1.py executed as script
 # do something
-#    cnn_experiment()
+#    cnn_GL_experiment()
+
+import load_face_images as load_data
+
+[x_train, y_train, x_val, y_val, x_test, y_test] = load_data.load_data(2)
 
 #def cnn_GL_experiment(gs):
 import tensorflow as tf
@@ -17,7 +21,7 @@ import numpy as np
 from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPool2D
 from tensorflow.keras import Model
 
-from load_face_images import x_train, y_train, x_test, y_test
+#from load_face_images import x_train, y_train, x_test, y_test
 
 #x_test = x_test[:100]
 #y_test = y_test[:100]
@@ -33,11 +37,11 @@ from load_face_images import x_train, y_train, x_test, y_test
 #(x_train, y_train), (x_test, y_test) = mnist.load_data()
 #x_train, x_test = x_train / 255.0, x_test / 255.0
 
-#gs = 20 # group size
+gs = 80 # group size
 n_pos = 10
 n_neg = 10
-n_pos_tst = 24
-n_neg_tst = 24
+n_pos_tst = 44
+n_neg_tst = 44
 def GoupData(rdata, gs, n1, n2):
     #GL data preprocessing
     rn = int(np.ceil((160-gs)/30))
@@ -55,6 +59,7 @@ def GoupData(rdata, gs, n1, n2):
 
 [x_train, y_train, gn] = GoupData(x_train, gs, n_pos, n_neg)
 [x_test, y_test, gn] = GoupData(x_test, gs, n_pos_tst, n_neg_tst)
+
 
 ## Add a channels dimension
 x_train = x_train[..., tf.newaxis]
@@ -105,7 +110,7 @@ def train_step(images, labels):
     loss = loss_object(labels, predictions)
   gradients = tape.gradient(loss, model.trainable_variables)
   optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-
+    
   train_loss(loss)
   train_accuracy(labels, predictions)
   
@@ -120,7 +125,7 @@ def test_step(images, labels):
   test_accuracy(labels, predictions)
 
 
-EPOCHS = 5
+EPOCHS = 10
 
 for epoch in range(EPOCHS):
   # Reset the metrics at the start of the next epoch
@@ -179,8 +184,11 @@ for n in range(int(output_test.shape[0]/gn)):
 
 number_samples_class = int(mean_test.shape[0]/2)
     
-ss = sum(mean_test[0:number_samples_class,0]>threshold)/number_samples_class
-sp = sum(mean_test[number_samples_class:number_samples_class*2,0]<threshold)/number_samples_class
+#ss = sum(mean_test[0:number_samples_class,0]>threshold)/number_samples_class
+#sp = sum(mean_test[number_samples_class:number_samples_class*2,0]<threshold)/number_samples_class
+ss = sum(mean_test[0:number_samples_class,0]>threshold)/n_pos_tst
+sp = sum(mean_test[number_samples_class:number_samples_class*2,0]<threshold)/n_neg_tst
 
 error = 1-(ss+sp)/2
 
+#    return(train_error, error)

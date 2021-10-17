@@ -68,10 +68,11 @@ def exp(x_train, y_train, x_test, y_test,lr):
         # behavior during training versus inference (e.g. Dropout).
             predictions = model(images, training=True)
             loss = loss_object(labels, predictions)
-            gradients = tape.gradient(loss, model.trainable_variables)
-            optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-            train_loss(loss)
-            train_accuracy(labels, predictions)
+        gradients = tape.gradient(loss, model.trainable_variables)
+        optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+        
+        train_loss(loss)
+        train_accuracy(labels, predictions)
   
     @tf.function
     def test_step(images, labels):

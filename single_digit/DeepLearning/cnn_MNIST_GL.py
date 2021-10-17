@@ -96,10 +96,11 @@ def exp(x_train, y_train, x_test, y_test,lr):
         # behavior during training versus inference (e.g. Dropout).
             predictions = model(images, training=True)
             loss = loss_object(labels, predictions)
-            gradients = tape.gradient(loss, model.trainable_variables)
-            optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-            train_loss(loss)
-            train_accuracy(labels, predictions)
+        gradients = tape.gradient(loss, model.trainable_variables)
+        optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+        
+        train_loss(loss)
+        train_accuracy(labels, predictions)
   
     @tf.function
     def test_step(images, labels):
@@ -175,7 +176,8 @@ def post_adapt(y_pre_train,n_pos,n_neg,gn, y_pre):
     
     #threshold = (np.mean(mean_train[0:n_pos]) + np.mean(mean_train[n_pos:n_pos+n_neg]))/2
     #threshold = (np.min(mean_train[0:n_pos]) + np.max(mean_train[n_pos:n_pos+n_neg]))/2
-    threshold = (np.median(mean_train[0:n_pos]) + np.median(mean_train[n_pos:n_pos+n_neg]))/2
+    #threshold = (np.median(mean_train[0:n_pos]) + np.median(mean_train[n_pos:n_pos+n_neg]))/2
+    threshold = 0
     
     ss_train = sum(mean_train[0:n_pos,0]>threshold)/n_pos
     sp_train = sum(mean_train[n_pos:n_pos+n_neg,0]<threshold)/n_neg

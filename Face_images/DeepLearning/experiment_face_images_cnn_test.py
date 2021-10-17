@@ -5,16 +5,17 @@ Created on Mon Jan 13 14:57:04 2020
 @author: User
 """
 #if __name__ == '__main__':
-    # test1.py executed as script
-    # do something
+# test1.py executed as script
+# do something
 #    cnn_experiment()
+import load_face_images as load_data
 
-#def cnn_experiment():
+[x_train, y_train, x_val, y_val, x_test, y_test] = load_data.load_data(2)
+#def cnn_experiment(x_train, y_train, x_test, y_test):
 import tensorflow as tf
 from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPool2D
 from tensorflow.keras import Model
-from load_face_images import x_train, y_train, x_test, y_test
-
+#from load_face_images import x_train, y_train, x_test, y_test
 
 
 #mnist = tf.keras.datasets.mnist
@@ -69,10 +70,11 @@ def train_step(images, labels):
     # behavior during training versus inference (e.g. Dropout).
         predictions = model(images, training=True)
         loss = loss_object(labels, predictions)
-        gradients = tape.gradient(loss, model.trainable_variables)
-        optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-        train_loss(loss)
-        train_accuracy(labels, predictions)
+    gradients = tape.gradient(loss, model.trainable_variables)
+    optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+    
+    train_loss(loss)
+    train_accuracy(labels, predictions)
   
 @tf.function
 def test_step(images, labels):
@@ -80,11 +82,12 @@ def test_step(images, labels):
     # behavior during training versus inference (e.g. Dropout).
     predictions = model(images, training=False)
     t_loss = loss_object(labels, predictions)
+    
     test_loss(t_loss)
     test_accuracy(labels, predictions)
 
 
-EPOCHS = 5
+EPOCHS = 10
 
 for epoch in range(EPOCHS):
     # Reset the metrics at the start of the next epoch
@@ -93,11 +96,11 @@ for epoch in range(EPOCHS):
     test_loss.reset_states()
     test_accuracy.reset_states()
 
-for images, labels in train_ds:
-    train_step(images, labels)
+    for images, labels in train_ds:
+        train_step(images, labels)
 
-for test_images, test_labels in test_ds:
-    test_step(test_images, test_labels)
+    for test_images, test_labels in test_ds:
+        test_step(test_images, test_labels)
 
     template = 'Epoch {}, Loss: {}, Accuracy: {}, Test Loss: {}, Test Accuracy: {}'
     print(template.format(epoch + 1,
@@ -114,7 +117,7 @@ train_error = 1-(ss_train+sp_train)/2
 
   
 y_pre = model(x_test).numpy()
-ss = sum(y_pre[0:24,0]<y_pre[0:24,1])/24
-sp = sum(y_pre[24:48,0]>y_pre[24:48,1])/24
+ss = sum(y_pre[0:44,0]<y_pre[0:44,1])/44
+sp = sum(y_pre[44:88,0]>y_pre[44:88,1])/44
 error = 1-(ss+sp)/2
 #    return(train_error, error)

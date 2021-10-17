@@ -20,7 +20,10 @@ function [training_error, test_error]  = Experiment_standardSVM_fixed_C(c_parame
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     option_liblinear = ['-c ', num2str(c_parameter), ' -s 0'];
     model = svmtrain(trn.y, trn.X, option_liblinear);
-
+    
+    %default_liblinear = ['-s 0'];
+    %model = svmtrain(trn.y, trn.X, default_liblinear);
+    
     fprintf('------------------------------------------------------------\n')
     fprintf('training results:\n')
     fprintf('True positive:\n')

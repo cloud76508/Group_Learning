@@ -25,9 +25,9 @@ for n = 1:length(window_size)
    for m = 1:repeat_num
        m
       [training_error_ad(m,n), test_error_ad(m,n)] = SVM_GL_adaptive(window_size(n));
-       [training_error_ad_f(m,n), test_error_ad_f(m,n)] = SVM_GL_adaptive_fixed_C(window_size(n));
+      %[training_error_ad_f(m,n), test_error_ad_f(m,n)] = SVM_GL_adaptive_fixed_C(window_size(n));
        
-      %[training_error_mv(m,n), test_error_mv(m,n)] = SVM_GL_MV(window_size(n));
+      [training_error_mv(m,n), test_error_mv(m,n)] = SVM_GL_MV(window_size(n));
 
       %[training_error_SVM(m,n), test_error_SVM(m,n)] = Experiment_standardSVM_fixed_C(c(n));
    end

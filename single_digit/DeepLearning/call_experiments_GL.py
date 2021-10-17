@@ -23,7 +23,7 @@ tst_error_GL_MV =  np.zeros([10, 5])
 
 #gs_list = [18,21,24,27]
 gs_list = [15,18,21,24,27]
-#gs_list = [25]
+#gs_list = [21,24,27]
 
 #LR = [0.1,0.01,0.001,0.0001,0.00001]
 LR = [0.001,0.0008,0.0006,0.0004,0.0002]
@@ -53,6 +53,9 @@ for i in range(10):
         [temp1, temp2, y_pre_trn_GL, y_pre_val_GL] = cnn_MNIST_GL.exp(x_trn_GL, y_trn_GL, x_val_GL, y_val_GL,opt_para)
         [temp1, temp2, y_pre_trn_GL, y_pre_tst_GL] = cnn_MNIST_GL.exp(x_trn_GL, y_trn_GL, x_tst_GL, y_tst_GL,opt_para)
         
-        [trn_error_GL_AD[i,j], tst_error_GL_AD[i,j]] = cnn_MNIST_GL.post_adapt(y_pre_val_GL,n_pos_val,n_neg_val,gn_val, y_pre_tst_GL)
-        [trn_error_GL_MV[i,j], tst_error_GL_MV[i,j]] = cnn_MNIST_GL.post_MV(y_pre_val_GL,n_pos_val,n_neg_val,gn_val, y_pre_tst_GL)
+        [temp1, trn_error_GL_AD[i,j]] = cnn_MNIST_GL.post_adapt(y_pre_val_GL,n_pos_val,n_neg_val,gn_val, y_pre_trn_GL)
+        [temp1, trn_error_GL_MV[i,j]] = cnn_MNIST_GL.post_MV(y_pre_val_GL,n_pos_val,n_neg_val,gn_val, y_pre_trn_GL)
+        
+        [temp1, tst_error_GL_AD[i,j]] = cnn_MNIST_GL.post_adapt(y_pre_val_GL,n_pos_val,n_neg_val,gn_val, y_pre_tst_GL)
+        [temp1, tst_error_GL_MV[i,j]] = cnn_MNIST_GL.post_MV(y_pre_val_GL,n_pos_val,n_neg_val,gn_val, y_pre_tst_GL)
         

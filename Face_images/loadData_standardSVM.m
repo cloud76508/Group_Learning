@@ -5,13 +5,13 @@ downsample_factor = 1;
 %positiveFeaturesDir = 'D:\yalefaces_positive\';
 %positiveList = dir(fullfile([positiveFeaturesDir '*.gif']));
 
-positiveFeaturesDir = 'D:\CroppedYale\yaleB07\';
+positiveFeaturesDir = 'D:\CroppedYale\yaleB25\';
 positiveList = dir(fullfile([positiveFeaturesDir '*.pgm']));
 
 %negativeFeaturesDir = 'D:\yalefaces_negative\';
 %negtiveList = dir(fullfile([negativeFeaturesDir '*.gif']));
 
-negativeFeaturesDir = 'D:\CroppedYale\yaleB19\';
+negativeFeaturesDir = 'D:\CroppedYale\yaleB30\';
 negtiveList = dir(fullfile([negativeFeaturesDir '*.pgm']));
 
 %load training data

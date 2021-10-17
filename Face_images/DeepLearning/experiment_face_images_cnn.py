@@ -9,11 +9,11 @@ if __name__ == '__main__':
     # do something
     cnn_experiment()
 
-def cnn_experiment():
+def cnn_experiment(x_train, y_train, x_test, y_test):
     import tensorflow as tf
     from tensorflow.keras.layers import Dense, Flatten, Conv2D, MaxPool2D
     from tensorflow.keras import Model
-    from load_face_images import x_train, y_train, x_test, y_test
+    #from load_face_images import x_train, y_train, x_test, y_test
 
 
 
@@ -69,10 +69,11 @@ def cnn_experiment():
         # behavior during training versus inference (e.g. Dropout).
             predictions = model(images, training=True)
             loss = loss_object(labels, predictions)
-            gradients = tape.gradient(loss, model.trainable_variables)
-            optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-            train_loss(loss)
-            train_accuracy(labels, predictions)
+        gradients = tape.gradient(loss, model.trainable_variables)
+        optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+        
+        train_loss(loss)
+        train_accuracy(labels, predictions)
   
     @tf.function
     def test_step(images, labels):
@@ -80,6 +81,7 @@ def cnn_experiment():
         # behavior during training versus inference (e.g. Dropout).
         predictions = model(images, training=False)
         t_loss = loss_object(labels, predictions)
+        
         test_loss(t_loss)
         test_accuracy(labels, predictions)
 

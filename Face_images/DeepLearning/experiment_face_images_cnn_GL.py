@@ -106,7 +106,7 @@ def cnn_GL_experiment(gs):
         loss = loss_object(labels, predictions)
       gradients = tape.gradient(loss, model.trainable_variables)
       optimizer.apply_gradients(zip(gradients, model.trainable_variables))
-    
+        
       train_loss(loss)
       train_accuracy(labels, predictions)
       
